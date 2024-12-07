@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             panel1 = new Panel();
+            label5 = new Label();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -48,7 +49,8 @@
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.GradientActiveCaption;
+            panel1.BackColor = SystemColors.Highlight;
+            panel1.Controls.Add(label5);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -56,15 +58,27 @@
             panel1.Size = new Size(768, 79);
             panel1.TabIndex = 0;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.Red;
+            label5.Location = new Point(709, 13);
+            label5.Name = "label5";
+            label5.Size = new Size(46, 50);
+            label5.TabIndex = 2;
+            label5.Text = "X";
+            label5.Click += label5_Click;
+            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.BackColor = SystemColors.Highlight;
-            label1.Font = new Font("Microsoft New Tai Lue", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Microsoft New Tai Lue", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 1);
+            label1.Location = new Point(82, 9);
             label1.Name = "label1";
-            label1.Size = new Size(775, 78);
+            label1.Size = new Size(522, 52);
             label1.TabIndex = 1;
             label1.Text = "ATM Management System";
             // 
@@ -109,6 +123,7 @@
             Id.Name = "Id";
             Id.Size = new Size(489, 52);
             Id.TabIndex = 2;
+            Id.TextChanged += Id_TextChanged;
             // 
             // Password
             // 
@@ -152,6 +167,7 @@
             button2.TabIndex = 3;
             button2.Text = "Cancel";
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // checkpassword
             // 
@@ -233,5 +249,6 @@
         private Label checkpassword;
         private Label checkId;
         private Label Invalid;
+        private Label label5;
     }
 }

@@ -33,9 +33,10 @@
             button1 = new Button();
             button2 = new Button();
             label1 = new Label();
-            label2 = new Label();
+            AccNum = new Label();
             label3 = new Label();
-            label4 = new Label();
+            balance = new Label();
+            label6 = new Label();
             SuspendLayout();
             // 
             // label5
@@ -96,17 +97,17 @@
             label1.Text = "Account Number :";
             label1.Click += label1_Click;
             // 
-            // label2
+            // AccNum
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.ForeColor = SystemColors.Highlight;
-            label2.Location = new Point(453, 137);
-            label2.Name = "label2";
-            label2.Size = new Size(130, 38);
-            label2.TabIndex = 11;
-            label2.Text = "Acc Num";
-            label2.Click += label2_Click;
+            AccNum.AutoSize = true;
+            AccNum.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AccNum.ForeColor = SystemColors.Highlight;
+            AccNum.Location = new Point(435, 126);
+            AccNum.Name = "AccNum";
+            AccNum.Size = new Size(130, 38);
+            AccNum.TabIndex = 11;
+            AccNum.Text = "Acc Num";
+            AccNum.Click += label2_Click;
             // 
             // label3
             // 
@@ -120,25 +121,38 @@
             label3.Text = "Your Balance :";
             label3.Click += label3_Click;
             // 
-            // label4
+            // balance
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.ForeColor = SystemColors.Highlight;
-            label4.Location = new Point(453, 261);
-            label4.Name = "label4";
-            label4.Size = new Size(140, 38);
-            label4.TabIndex = 11;
-            label4.Text = "Balane EG";
-            label4.Click += label2_Click;
+            balance.AutoSize = true;
+            balance.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            balance.ForeColor = SystemColors.Highlight;
+            balance.Location = new Point(425, 247);
+            balance.Name = "balance";
+            balance.Size = new Size(140, 38);
+            balance.TabIndex = 11;
+            balance.Text = "Balane EG";
+            balance.Click += label2_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.Red;
+            label6.Location = new Point(724, 9);
+            label6.Name = "label6";
+            label6.Size = new Size(46, 50);
+            label6.TabIndex = 12;
+            label6.Text = "X";
+            label6.Click += label6_Click;
             // 
             // CheckBalance
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(795, 450);
-            Controls.Add(label4);
-            Controls.Add(label2);
+            Controls.Add(label6);
+            Controls.Add(balance);
+            Controls.Add(AccNum);
             Controls.Add(label3);
             Controls.Add(label1);
             Controls.Add(button2);
@@ -161,8 +175,9 @@
         private Button button1;
         private Button button2;
         private Label label1;
-        private Label label2;
+        private Label AccNum;
         private Label label3;
-        private Label label4;
+        private Label balance;
+        private Label label6;
     }
 }
