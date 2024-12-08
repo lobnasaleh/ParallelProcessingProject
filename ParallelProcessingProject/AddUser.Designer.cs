@@ -50,7 +50,7 @@
             // 
             // username
             // 
-            username.Location = new Point(242, 130);
+            username.Location = new Point(242, 119);
             username.Multiline = true;
             username.Name = "username";
             username.Size = new Size(247, 40);
@@ -58,15 +58,16 @@
             // 
             // pin
             // 
-            pin.Location = new Point(242, 216);
-            pin.Multiline = true;
+            pin.Location = new Point(242, 309);
             pin.Name = "pin";
-            pin.Size = new Size(247, 39);
+            pin.PasswordChar = '*';
+            pin.Size = new Size(247, 27);
             pin.TabIndex = 0;
+            pin.UseSystemPasswordChar = true;
             // 
             // balance
             // 
-            balance.Location = new Point(242, 309);
+            balance.Location = new Point(242, 218);
             balance.Multiline = true;
             balance.Name = "balance";
             balance.Size = new Size(247, 35);
@@ -86,7 +87,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.Highlight;
-            label1.Location = new Point(54, 130);
+            label1.Location = new Point(63, 130);
             label1.Name = "label1";
             label1.Size = new Size(120, 29);
             label1.TabIndex = 2;
@@ -98,7 +99,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold);
             label2.ForeColor = SystemColors.Highlight;
-            label2.Location = new Point(63, 226);
+            label2.Location = new Point(63, 307);
             label2.Name = "label2";
             label2.Size = new Size(52, 29);
             label2.TabIndex = 2;
@@ -109,7 +110,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold);
             label3.ForeColor = SystemColors.Highlight;
-            label3.Location = new Point(63, 315);
+            label3.Location = new Point(63, 224);
             label3.Name = "label3";
             label3.Size = new Size(96, 29);
             label3.TabIndex = 2;
@@ -199,7 +200,7 @@
             pinerr.AutoSize = true;
             pinerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pinerr.ForeColor = Color.Red;
-            pinerr.Location = new Point(242, 258);
+            pinerr.Location = new Point(248, 339);
             pinerr.Name = "pinerr";
             pinerr.Size = new Size(0, 23);
             pinerr.TabIndex = 8;
@@ -209,7 +210,7 @@
             balanceerr.AutoSize = true;
             balanceerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             balanceerr.ForeColor = Color.Red;
-            balanceerr.Location = new Point(242, 347);
+            balanceerr.Location = new Point(248, 256);
             balanceerr.Name = "balanceerr";
             balanceerr.Size = new Size(0, 23);
             balanceerr.TabIndex = 8;

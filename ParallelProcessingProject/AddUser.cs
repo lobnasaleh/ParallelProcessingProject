@@ -20,9 +20,14 @@ namespace ParallelProcessingProject
         }
         private int roleid = 0;
 
-
+        string hashedpassword;
         SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+        private string HashPassword(string password)
+        {
 
+           string passwordhash= BCrypt.Net.BCrypt.EnhancedHashPassword(password,13);
+            return passwordhash;
+        }
         private bool checkDuplicateUserName(string userName)
         {
             try
@@ -113,6 +118,8 @@ namespace ParallelProcessingProject
 
             else
             {
+                 hashedpassword=HashPassword(pin.Text); 
+
                 pinerr.Visible = false;
 
             }
@@ -158,14 +165,13 @@ namespace ParallelProcessingProject
                 //enetered both check ba2a credentials
                 try
                 {
-
                     conn.Open();
 
                     //@username nvarchar(50),@password nvarchar(255),@balance decimal (18,2),@role int
                     SqlCommand cmd = new SqlCommand("adduser", conn);//esm el procedure
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@username", username.Text);
-                    cmd.Parameters.AddWithValue("@password", pin.Text);
+                    cmd.Parameters.AddWithValue("@password", hashedpassword);
                     cmd.Parameters.AddWithValue("@balance", balance.Text);
                     if (role.SelectedItem.ToString() == "Admin")
                         roleid = 1;

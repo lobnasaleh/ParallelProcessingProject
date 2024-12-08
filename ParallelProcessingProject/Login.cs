@@ -16,10 +16,16 @@ namespace ParallelProcessingProject
         public Login()
         {
             InitializeComponent();
+           
         }
 
         SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+        private bool CheckHash(string passwordenetred,string dbpassword)
+        {
 
+           bool isequal = BCrypt.Net.BCrypt.EnhancedVerify(passwordenetred, dbpassword);
+            return isequal;
+        }
 
         private void label3_Click(object sender, EventArgs e)
         {
@@ -28,6 +34,7 @@ namespace ParallelProcessingProject
 
         private void Login_Load(object sender, EventArgs e)
         {
+            
 
         }
 
@@ -46,8 +53,6 @@ namespace ParallelProcessingProject
                 checkId.Visible = true;
                 checkpassword.Visible = false;
                 Invalid.Visible = false;
-
-
             }
             else if (!string.IsNullOrWhiteSpace(Id.Text ) && string.IsNullOrWhiteSpace(Password.Text ))
             {
@@ -61,47 +66,48 @@ namespace ParallelProcessingProject
                 //enetered both check ba2a credentials
                 try
                 {
-
                     conn.Open();
-
 
                     SqlCommand cmd = new SqlCommand("checkUser", conn);//esm el procedure
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Id.Text);
-                    cmd.Parameters.AddWithValue("@password", Password.Text);
-
+                      // sheltha men el query  cmd.Parameters.AddWithValue("@password", Password.Text);
+                    
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
 
-                    sda.Fill(dt);
+                    sda.Fill(dt);//fill tabel with result of query
                     if (dt.Rows.Count > 0)
-                    { //he found data of User/Admin 
-                        int RoleId = Convert.ToInt32(dt.Rows[0][4]);//4 representing the index of roleid in database as a column
+                    { //he found Id of User/Admin 
 
+                        string dbpassword= dt.Rows[0][2].ToString();
 
-                        if (RoleId == 1)
-                        {//admin 
-                         // AddUser u = new AddUser();
-                         // u.Show();
-                         //this.Close();
-                            UserSession.UserId = Convert.ToInt32(dt.Rows[0][0]);
-                            UserSession.UserName = dt.Rows[0][1].ToString();
-                            AddUser u=new AddUser();
-                            u.Show();
-                            Visible = false;
-                            //MessageBox.Show("Hello,Admin");
+                        bool ispasswordvalid=CheckHash(Password.Text, dbpassword);
+
+                        if (ispasswordvalid) {
+                            int RoleId = Convert.ToInt32(dt.Rows[0][4]);//4 representing the index of roleid in database as a column
+                            if (RoleId == 1)//admin
+                            {
+                                UserSession.UserId = Convert.ToInt32(dt.Rows[0][0]);
+                                UserSession.UserName = dt.Rows[0][1].ToString();
+                                AddUser u = new AddUser();
+                                u.Show();
+                                Visible = false;
+                               
+                            }
+                            else
+                            {//User
+                                SelectTransaction sc = new SelectTransaction();
+                                sc.Show();
+                                Visible = false;
+                                UserSession.UserId = Convert.ToInt32(dt.Rows[0][0]);
+                                UserSession.Balance = Convert.ToDecimal(dt.Rows[0][3]);
+                                UserSession.UserName = dt.Rows[0][1].ToString();
+                               
+
+                            }
                         }
-                        else
-                        {//User
-                            SelectTransaction sc = new SelectTransaction();
-                            sc.Show();
-                            Visible = false;
-                            UserSession.UserId = Convert.ToInt32(dt.Rows[0][0]);
-                            UserSession.Balance = Convert.ToDecimal(dt.Rows[0][3]);
-                            UserSession.UserName = dt.Rows[0][1].ToString();
-                            // MessageBox.Show($"Hello,{dt.Rows[0][1]}");
 
-                        }
                     }
                     else
                     {//could not Find User with this Credentials
@@ -110,16 +116,13 @@ namespace ParallelProcessingProject
                         Invalid.Visible = true;
                         Id.Text = "";
                         Password.Text = "";
-                        //y sleep shwaya ba3d keda ye3mlo return 3ala el home page
+                        //a3ml eno y sleep shwaya ba3d keda ye3mlo return 3ala el home page
                     }
 
                 }
                 catch (Exception ex)
                 {
-
                     MessageBox.Show(ex.ToString());
-
-
                 }
                 finally
                 {

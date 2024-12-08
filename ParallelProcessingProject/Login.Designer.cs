@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             panel1 = new Panel();
+            label5 = new Label();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -41,7 +42,6 @@
             checkpassword = new Label();
             checkId = new Label();
             Invalid = new Label();
-            label5 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -56,6 +56,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(768, 79);
             panel1.TabIndex = 0;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.Red;
+            label5.Location = new Point(709, 13);
+            label5.Name = "label5";
+            label5.Size = new Size(46, 50);
+            label5.TabIndex = 2;
+            label5.Text = "X";
+            label5.Click += label5_Click;
             // 
             // label1
             // 
@@ -85,7 +97,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft New Tai Lue", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = SystemColors.Highlight;
-            label3.Location = new Point(197, 106);
+            label3.Location = new Point(270, 125);
             label3.Name = "label3";
             label3.Size = new Size(349, 45);
             label3.TabIndex = 1;
@@ -96,7 +108,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Microsoft New Tai Lue", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.Highlight;
-            label4.Location = new Point(197, 232);
+            label4.Location = new Point(270, 228);
             label4.Name = "label4";
             label4.Size = new Size(161, 45);
             label4.TabIndex = 1;
@@ -105,20 +117,21 @@
             // 
             // Id
             // 
-            Id.Location = new Point(197, 154);
+            Id.Location = new Point(270, 173);
             Id.Multiline = true;
             Id.Name = "Id";
-            Id.Size = new Size(489, 52);
+            Id.Size = new Size(334, 29);
             Id.TabIndex = 2;
             Id.TextChanged += Id_TextChanged;
             // 
             // Password
             // 
-            Password.Location = new Point(197, 282);
-            Password.Multiline = true;
+            Password.Location = new Point(270, 276);
             Password.Name = "Password";
-            Password.Size = new Size(489, 50);
+            Password.PasswordChar = '*';
+            Password.Size = new Size(334, 27);
             Password.TabIndex = 2;
+            Password.UseSystemPasswordChar = true;
             Password.TextChanged += Password_TextChanged;
             // 
             // button1
@@ -126,7 +139,7 @@
             button1.BackColor = SystemColors.GradientActiveCaption;
             button1.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = SystemColors.Highlight;
-            button1.Location = new Point(350, 380);
+            button1.Location = new Point(327, 380);
             button1.Name = "button1";
             button1.Size = new Size(113, 45);
             button1.TabIndex = 3;
@@ -149,7 +162,7 @@
             checkpassword.AutoSize = true;
             checkpassword.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             checkpassword.ForeColor = Color.Red;
-            checkpassword.Location = new Point(197, 335);
+            checkpassword.Location = new Point(270, 306);
             checkpassword.Name = "checkpassword";
             checkpassword.Size = new Size(217, 23);
             checkpassword.TabIndex = 5;
@@ -161,7 +174,7 @@
             checkId.AutoSize = true;
             checkId.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             checkId.ForeColor = Color.Red;
-            checkId.Location = new Point(197, 209);
+            checkId.Location = new Point(270, 205);
             checkId.Name = "checkId";
             checkId.Size = new Size(162, 23);
             checkId.TabIndex = 5;
@@ -173,24 +186,12 @@
             Invalid.AutoSize = true;
             Invalid.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Invalid.ForeColor = Color.Red;
-            Invalid.Location = new Point(330, 335);
+            Invalid.Location = new Point(304, 340);
             Invalid.Name = "Invalid";
             Invalid.Size = new Size(183, 28);
             Invalid.TabIndex = 6;
             Invalid.Text = "Invalid Credentials !";
             Invalid.Visible = false;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.ForeColor = Color.Red;
-            label5.Location = new Point(709, 13);
-            label5.Name = "label5";
-            label5.Size = new Size(46, 50);
-            label5.TabIndex = 2;
-            label5.Text = "X";
-            label5.Click += label5_Click;
             // 
             // Login
             // 
