@@ -17,10 +17,10 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-       
+
         SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
-       
-        
+
+
         private void label3_Click(object sender, EventArgs e)
         {
 
@@ -33,7 +33,7 @@ namespace ParallelProcessingProject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Id.Text == "" && Password.Text == "")
+            if (string.IsNullOrWhiteSpace(Id.Text)  && string.IsNullOrWhiteSpace(Password.Text))
             {
                 checkId.Visible = true;
                 checkpassword.Visible = true;
@@ -41,7 +41,7 @@ namespace ParallelProcessingProject
 
 
             }
-            else if (Id.Text == "" && Password.Text != "")
+            else if (string.IsNullOrWhiteSpace(Id.Text ) && !string.IsNullOrWhiteSpace(Password.Text) )
             {
                 checkId.Visible = true;
                 checkpassword.Visible = false;
@@ -49,7 +49,7 @@ namespace ParallelProcessingProject
 
 
             }
-            else if (Id.Text != "" && Password.Text == "")
+            else if (!string.IsNullOrWhiteSpace(Id.Text ) && string.IsNullOrWhiteSpace(Password.Text ))
             {
                 checkId.Visible = false;
                 checkpassword.Visible = true;
@@ -63,7 +63,7 @@ namespace ParallelProcessingProject
                 {
 
                     conn.Open();
-                   
+
 
                     SqlCommand cmd = new SqlCommand("checkUser", conn);//esm el procedure
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -86,18 +86,20 @@ namespace ParallelProcessingProject
                          //this.Close();
                             UserSession.UserId = Convert.ToInt32(dt.Rows[0][0]);
                             UserSession.UserName = dt.Rows[0][1].ToString();
-
-                            MessageBox.Show("Hello,Admin");
+                            AddUser u=new AddUser();
+                            u.Show();
+                            Visible = false;
+                            //MessageBox.Show("Hello,Admin");
                         }
                         else
                         {//User
-                            SelectTransaction sc= new SelectTransaction();
+                            SelectTransaction sc = new SelectTransaction();
                             sc.Show();
-                            Visible=false;
-                            UserSession.UserId= Convert.ToInt32(dt.Rows[0][0]);
+                            Visible = false;
+                            UserSession.UserId = Convert.ToInt32(dt.Rows[0][0]);
                             UserSession.Balance = Convert.ToDecimal(dt.Rows[0][3]);
                             UserSession.UserName = dt.Rows[0][1].ToString();
-                           // MessageBox.Show($"Hello,{dt.Rows[0][1]}");
+                            // MessageBox.Show($"Hello,{dt.Rows[0][1]}");
 
                         }
                     }
@@ -140,6 +142,11 @@ namespace ParallelProcessingProject
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Password_TextChanged(object sender, EventArgs e)
         {
 
         }

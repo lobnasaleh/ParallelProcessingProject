@@ -34,9 +34,9 @@ namespace ParallelProcessingProject
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MiniStatement ms=new MiniStatement();   
+            MiniStatement ms = new MiniStatement();
             ms.Show();
-            Visible=false;
+            Visible = false;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -53,9 +53,14 @@ namespace ParallelProcessingProject
 
         private void button1_Click(object sender, EventArgs e)//check balance
         {
-            CheckBalance cb=new CheckBalance();
+            CheckBalance cb = new CheckBalance();
             cb.Show();
             this.Close();
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

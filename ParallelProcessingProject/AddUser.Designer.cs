@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            comboBox1 = new ComboBox();
+            username = new TextBox();
+            pin = new TextBox();
+            balance = new TextBox();
+            role = new ComboBox();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -41,47 +41,52 @@
             label6 = new Label();
             button1 = new Button();
             panel1 = new Panel();
+            usernameerr = new Label();
+            pinerr = new Label();
+            balanceerr = new Label();
+            roleerr = new Label();
+            label7 = new Label();
             SuspendLayout();
             // 
-            // textBox1
+            // username
             // 
-            textBox1.Location = new Point(242, 121);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(247, 40);
-            textBox1.TabIndex = 0;
+            username.Location = new Point(242, 130);
+            username.Multiline = true;
+            username.Name = "username";
+            username.Size = new Size(247, 40);
+            username.TabIndex = 0;
             // 
-            // textBox2
+            // pin
             // 
-            textBox2.Location = new Point(242, 216);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(247, 39);
-            textBox2.TabIndex = 0;
+            pin.Location = new Point(242, 216);
+            pin.Multiline = true;
+            pin.Name = "pin";
+            pin.Size = new Size(247, 39);
+            pin.TabIndex = 0;
             // 
-            // textBox3
+            // balance
             // 
-            textBox3.Location = new Point(242, 309);
-            textBox3.Multiline = true;
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(247, 35);
-            textBox3.TabIndex = 0;
+            balance.Location = new Point(242, 309);
+            balance.Multiline = true;
+            balance.Name = "balance";
+            balance.Size = new Size(247, 35);
+            balance.TabIndex = 0;
             // 
-            // comboBox1
+            // role
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "User", "Admin" });
-            comboBox1.Location = new Point(242, 415);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(247, 28);
-            comboBox1.TabIndex = 1;
+            role.FormattingEnabled = true;
+            role.Items.AddRange(new object[] { "User", "Admin" });
+            role.Location = new Point(242, 415);
+            role.Name = "role";
+            role.Size = new Size(247, 28);
+            role.TabIndex = 1;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.Highlight;
-            label1.Location = new Point(63, 132);
+            label1.Location = new Point(54, 130);
             label1.Name = "label1";
             label1.Size = new Size(120, 29);
             label1.TabIndex = 2;
@@ -132,6 +137,7 @@
             button4.TabIndex = 5;
             button4.Text = "Create";
             button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
             // 
             // label5
             // 
@@ -166,6 +172,7 @@
             button1.TabIndex = 5;
             button1.Text = "Log Out";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // panel1
             // 
@@ -174,15 +181,73 @@
             panel1.ForeColor = SystemColors.Highlight;
             panel1.Location = new Point(0, 605);
             panel1.Name = "panel1";
-            panel1.Size = new Size(612, 14);
+            panel1.Size = new Size(617, 14);
             panel1.TabIndex = 7;
+            // 
+            // usernameerr
+            // 
+            usernameerr.AutoSize = true;
+            usernameerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            usernameerr.ForeColor = Color.Red;
+            usernameerr.Location = new Point(242, 173);
+            usernameerr.Name = "usernameerr";
+            usernameerr.Size = new Size(0, 23);
+            usernameerr.TabIndex = 8;
+            // 
+            // pinerr
+            // 
+            pinerr.AutoSize = true;
+            pinerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            pinerr.ForeColor = Color.Red;
+            pinerr.Location = new Point(242, 258);
+            pinerr.Name = "pinerr";
+            pinerr.Size = new Size(0, 23);
+            pinerr.TabIndex = 8;
+            // 
+            // balanceerr
+            // 
+            balanceerr.AutoSize = true;
+            balanceerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            balanceerr.ForeColor = Color.Red;
+            balanceerr.Location = new Point(242, 347);
+            balanceerr.Name = "balanceerr";
+            balanceerr.Size = new Size(0, 23);
+            balanceerr.TabIndex = 8;
+            balanceerr.Click += label8_Click;
+            // 
+            // roleerr
+            // 
+            roleerr.AutoSize = true;
+            roleerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            roleerr.ForeColor = Color.Red;
+            roleerr.Location = new Point(242, 446);
+            roleerr.Name = "roleerr";
+            roleerr.Size = new Size(0, 23);
+            roleerr.TabIndex = 8;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.ForeColor = Color.Red;
+            label7.Location = new Point(573, 9);
+            label7.Name = "label7";
+            label7.Size = new Size(46, 50);
+            label7.TabIndex = 9;
+            label7.Text = "X";
+            label7.Click += label7_Click;
             // 
             // AddUser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(612, 619);
+            ClientSize = new Size(617, 619);
+            Controls.Add(label7);
+            Controls.Add(roleerr);
+            Controls.Add(balanceerr);
+            Controls.Add(pinerr);
+            Controls.Add(usernameerr);
             Controls.Add(panel1);
             Controls.Add(label5);
             Controls.Add(button1);
@@ -192,24 +257,25 @@
             Controls.Add(label6);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(comboBox1);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(role);
+            Controls.Add(balance);
+            Controls.Add(pin);
+            Controls.Add(username);
             FormBorderStyle = FormBorderStyle.None;
             Name = "AddUser";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AddUser";
+            Load += AddUser_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private ComboBox comboBox1;
+        private TextBox username;
+        private TextBox pin;
+        private TextBox balance;
+        private ComboBox role;
         private Label label1;
         private Label label2;
         private Label label3;
@@ -219,5 +285,10 @@
         private Label label6;
         private Button button1;
         private Panel panel1;
+        private Label usernameerr;
+        private Label pinerr;
+        private Label balanceerr;
+        private Label roleerr;
+        private Label label7;
     }
 }

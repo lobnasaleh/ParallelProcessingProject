@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectTransaction));
-            label1 = new Label();
             button2 = new Button();
             button1 = new Button();
             button3 = new Button();
@@ -37,21 +36,10 @@
             button6 = new Button();
             pictureBox1 = new PictureBox();
             panel1 = new Panel();
+            label5 = new Label();
+            label6 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.BackColor = SystemColors.Highlight;
-            label1.Font = new Font("Microsoft New Tai Lue", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(0, -1);
-            label1.Name = "label1";
-            label1.Size = new Size(887, 78);
-            label1.TabIndex = 2;
-            label1.Text = "Select Your Transaction Please";
-            label1.Click += label1_Click;
             // 
             // button2
             // 
@@ -139,11 +127,37 @@
             panel1.TabIndex = 6;
             panel1.Paint += panel1_Paint;
             // 
+            // label5
+            // 
+            label5.BackColor = SystemColors.Highlight;
+            label5.Font = new Font("Microsoft New Tai Lue", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.White;
+            label5.Location = new Point(0, 9);
+            label5.Name = "label5";
+            label5.Size = new Size(879, 57);
+            label5.TabIndex = 11;
+            label5.Text = "Select Your Transaction Please\r\n";
+            label5.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.Red;
+            label6.Location = new Point(821, 9);
+            label6.Name = "label6";
+            label6.Size = new Size(46, 50);
+            label6.TabIndex = 15;
+            label6.Text = "X";
+            label6.Click += label6_Click;
+            // 
             // SelectTransaction
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(879, 575);
+            Controls.Add(label6);
+            Controls.Add(label5);
             Controls.Add(panel1);
             Controls.Add(pictureBox1);
             Controls.Add(button6);
@@ -151,7 +165,6 @@
             Controls.Add(button3);
             Controls.Add(button1);
             Controls.Add(button2);
-            Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "SelectTransaction";
             StartPosition = FormStartPosition.CenterScreen;
@@ -162,8 +175,6 @@
         }
 
         #endregion
-
-        private Label label1;
         private Button button2;
         private Button button1;
         private Button button3;
@@ -171,5 +182,7 @@
         private Button button6;
         private PictureBox pictureBox1;
         private Panel panel1;
+        private Label label5;
+        private Label label6;
     }
 }

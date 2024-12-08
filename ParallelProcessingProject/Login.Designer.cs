@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             panel1 = new Panel();
-            label5 = new Label();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -42,6 +41,7 @@
             checkpassword = new Label();
             checkId = new Label();
             Invalid = new Label();
+            label5 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -56,18 +56,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(768, 79);
             panel1.TabIndex = 0;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.ForeColor = Color.Red;
-            label5.Location = new Point(709, 13);
-            label5.Name = "label5";
-            label5.Size = new Size(46, 50);
-            label5.TabIndex = 2;
-            label5.Text = "X";
-            label5.Click += label5_Click;
             // 
             // label1
             // 
@@ -131,6 +119,7 @@
             Password.Name = "Password";
             Password.Size = new Size(489, 50);
             Password.TabIndex = 2;
+            Password.TextChanged += Password_TextChanged;
             // 
             // button1
             // 
@@ -190,6 +179,18 @@
             Invalid.TabIndex = 6;
             Invalid.Text = "Invalid Credentials !";
             Invalid.Visible = false;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.Red;
+            label5.Location = new Point(709, 13);
+            label5.Name = "label5";
+            label5.Size = new Size(46, 50);
+            label5.TabIndex = 2;
+            label5.Text = "X";
+            label5.Click += label5_Click;
             // 
             // Login
             // 

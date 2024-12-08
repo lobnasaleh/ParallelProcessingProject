@@ -10,6 +10,8 @@ namespace ParallelProcessingProject
     {
         public static int UserId { get; set; }
         public static string UserName { get; set; }
+        public static string Role { get; set; }
+
         public static decimal Balance { get; set; }
 
     }
