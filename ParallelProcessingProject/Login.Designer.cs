@@ -39,7 +39,6 @@
             Password = new TextBox();
             button1 = new Button();
             pictureBox1 = new PictureBox();
-            button2 = new Button();
             checkpassword = new Label();
             checkId = new Label();
             Invalid = new Label();
@@ -98,7 +97,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft New Tai Lue", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = SystemColors.Highlight;
-            label3.Location = new Point(197, 116);
+            label3.Location = new Point(197, 106);
             label3.Name = "label3";
             label3.Size = new Size(349, 45);
             label3.TabIndex = 1;
@@ -109,7 +108,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Microsoft New Tai Lue", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.Highlight;
-            label4.Location = new Point(197, 234);
+            label4.Location = new Point(197, 232);
             label4.Name = "label4";
             label4.Size = new Size(161, 45);
             label4.TabIndex = 1;
@@ -127,7 +126,7 @@
             // 
             // Password
             // 
-            Password.Location = new Point(188, 282);
+            Password.Location = new Point(197, 282);
             Password.Multiline = true;
             Password.Name = "Password";
             Password.Size = new Size(489, 50);
@@ -138,7 +137,7 @@
             button1.BackColor = SystemColors.GradientActiveCaption;
             button1.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = SystemColors.Highlight;
-            button1.Location = new Point(245, 380);
+            button1.Location = new Point(350, 380);
             button1.Name = "button1";
             button1.Size = new Size(113, 45);
             button1.TabIndex = 3;
@@ -149,25 +148,12 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(12, 164);
+            pictureBox1.Location = new Point(12, 145);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(160, 196);
+            pictureBox1.Size = new Size(179, 196);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
-            // 
-            // button2
-            // 
-            button2.BackColor = SystemColors.GradientActiveCaption;
-            button2.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.Highlight;
-            button2.Location = new Point(491, 380);
-            button2.Name = "button2";
-            button2.Size = new Size(113, 45);
-            button2.TabIndex = 3;
-            button2.Text = "Cancel";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
             // 
             // checkpassword
             // 
@@ -214,7 +200,6 @@
             Controls.Add(checkId);
             Controls.Add(checkpassword);
             Controls.Add(pictureBox1);
-            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(Password);
             Controls.Add(Id);
@@ -245,7 +230,6 @@
         private TextBox Password;
         private Button button1;
         private PictureBox pictureBox1;
-        private Button button2;
         private Label checkpassword;
         private Label checkId;
         private Label Invalid;

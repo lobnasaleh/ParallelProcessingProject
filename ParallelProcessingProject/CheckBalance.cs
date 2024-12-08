@@ -19,7 +19,7 @@ namespace ParallelProcessingProject
 
         private void CheckBalance_Load(object sender, EventArgs e)
         {
-            if (UserSession.UserId!=0 && UserSession.UserName != null)
+            if (UserSession.UserId != 0 && UserSession.UserName != null)
             {
                 AccNum.Text = UserSession.UserId.ToString();
                 balance.Text = UserSession.Balance.ToString();
@@ -44,6 +44,20 @@ namespace ParallelProcessingProject
         private void label6_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void button2_Click(object sender, EventArgs e)//logout
+        {
+            Login l = new Login();
+            l.Show();
+            Visible = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)//back
+        {
+            SelectTransaction sc = new SelectTransaction();
+            sc.Show();
+            Visible = false;
         }
     }
 }

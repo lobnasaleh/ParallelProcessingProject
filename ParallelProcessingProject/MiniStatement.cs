@@ -89,7 +89,9 @@ namespace ParallelProcessingProject
 
         private void button2_Click(object sender, EventArgs e)//logout
         {
-
+            Login l=new Login();
+            l.Show();
+            Visible=false;
         }
     }
 }

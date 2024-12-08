@@ -44,9 +44,11 @@ namespace ParallelProcessingProject
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)//logout
         {
-
+            Login l = new Login();
+            l.Show();
+            Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)//check balance
