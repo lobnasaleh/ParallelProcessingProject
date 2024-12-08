@@ -34,7 +34,9 @@ namespace ParallelProcessingProject
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            MiniStatement ms=new MiniStatement();   
+            ms.Show();
+            Visible=false;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

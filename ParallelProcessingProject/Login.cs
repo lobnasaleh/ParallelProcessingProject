@@ -111,13 +111,17 @@ namespace ParallelProcessingProject
                         //y sleep shwaya ba3d keda ye3mlo return 3ala el home page
                     }
 
-                    conn.Close();
                 }
                 catch (Exception ex)
                 {
 
                     MessageBox.Show(ex.ToString());
 
+
+                }
+                finally
+                {
+                    conn.Close();
 
                 }
             }

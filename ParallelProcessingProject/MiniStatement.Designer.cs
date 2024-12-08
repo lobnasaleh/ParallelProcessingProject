@@ -28,23 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
+            Ministgrid = new DataGridView();
             panel1 = new Panel();
             label5 = new Label();
             button2 = new Button();
             button1 = new Button();
             label1 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            label6 = new Label();
+            AccNum = new Label();
+            label2 = new Label();
+            ((System.ComponentModel.ISupportInitialize)Ministgrid).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // Ministgrid
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 163);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(740, 365);
-            dataGridView1.TabIndex = 0;
+            Ministgrid.AllowUserToAddRows = false;
+            Ministgrid.AllowUserToDeleteRows = false;
+            Ministgrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Ministgrid.GridColor = SystemColors.MenuBar;
+            Ministgrid.Location = new Point(42, 163);
+            Ministgrid.Name = "Ministgrid";
+            Ministgrid.ReadOnly = true;
+            Ministgrid.RowHeadersWidth = 51;
+            Ministgrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            Ministgrid.Size = new Size(662, 365);
+            Ministgrid.TabIndex = 0;
             // 
             // panel1
             // 
@@ -79,6 +87,7 @@
             button2.TabIndex = 11;
             button2.Text = "Log Out";
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -91,6 +100,7 @@
             button1.TabIndex = 12;
             button1.Text = "Back";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // label1
             // 
@@ -105,32 +115,74 @@
             label1.TextAlign = ContentAlignment.MiddleCenter;
             label1.Click += label1_Click;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.Red;
+            label6.Location = new Point(706, 5);
+            label6.Name = "label6";
+            label6.Size = new Size(46, 50);
+            label6.TabIndex = 14;
+            label6.Text = "X";
+            label6.Click += label6_Click;
+            // 
+            // AccNum
+            // 
+            AccNum.AutoSize = true;
+            AccNum.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AccNum.ForeColor = SystemColors.Highlight;
+            AccNum.Location = new Point(424, 109);
+            AccNum.Name = "AccNum";
+            AccNum.Size = new Size(130, 38);
+            AccNum.TabIndex = 16;
+            AccNum.Text = "Acc Num";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Microsoft New Tai Lue", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = SystemColors.Highlight;
+            label2.Location = new Point(102, 107);
+            label2.Name = "label2";
+            label2.Size = new Size(272, 40);
+            label2.TabIndex = 15;
+            label2.Text = "Account Number :";
+            // 
             // MiniStatement
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(764, 628);
+            Controls.Add(AccNum);
+            Controls.Add(label2);
+            Controls.Add(label6);
             Controls.Add(label1);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label5);
             Controls.Add(panel1);
-            Controls.Add(dataGridView1);
+            Controls.Add(Ministgrid);
             FormBorderStyle = FormBorderStyle.None;
             Name = "MiniStatement";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MiniStatement";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Load += MiniStatement_Load;
+            ((System.ComponentModel.ISupportInitialize)Ministgrid).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView Ministgrid;
         private Panel panel1;
         private Label label5;
         private Button button2;
         private Button button1;
         private Label label1;
+        private Label label6;
+        private Label AccNum;
+        private Label label2;
     }
 }
