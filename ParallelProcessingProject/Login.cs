@@ -109,11 +109,18 @@ namespace ParallelProcessingProject
                                
 
                             }
+                        }else
+                        {//invalid password
+                            Invalid.Text = "Please enter Valid Credentials";
+                            checkpassword.Visible = false;
+                            checkId.Visible = false;
+                            Id.Text = "";
+                            Password.Text = "";
                         }
 
                     }
                     else
-                    {//could not Find User with this Credentials
+                    {//could not Find User with this ID 
 
                         Invalid.Text = "Please enter Valid Credentials";
                         checkpassword.Visible = false;
