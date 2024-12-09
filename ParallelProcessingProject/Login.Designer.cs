@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             panel1 = new Panel();
-            label5 = new Label();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -49,25 +48,12 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Highlight;
-            panel1.Controls.Add(label5);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(768, 79);
             panel1.TabIndex = 0;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.ForeColor = Color.Red;
-            label5.Location = new Point(709, 13);
-            label5.Name = "label5";
-            label5.Size = new Size(46, 50);
-            label5.TabIndex = 2;
-            label5.Text = "X";
-            label5.Click += label5_Click;
             // 
             // label1
             // 
@@ -164,10 +150,8 @@
             checkpassword.ForeColor = Color.Red;
             checkpassword.Location = new Point(270, 306);
             checkpassword.Name = "checkpassword";
-            checkpassword.Size = new Size(217, 23);
+            checkpassword.Size = new Size(0, 23);
             checkpassword.TabIndex = 5;
-            checkpassword.Text = "Please enter your Password";
-            checkpassword.Visible = false;
             // 
             // checkId
             // 
@@ -176,22 +160,18 @@
             checkId.ForeColor = Color.Red;
             checkId.Location = new Point(270, 205);
             checkId.Name = "checkId";
-            checkId.Size = new Size(162, 23);
+            checkId.Size = new Size(0, 23);
             checkId.TabIndex = 5;
-            checkId.Text = "Please enter your Id";
-            checkId.Visible = false;
             // 
             // Invalid
             // 
             Invalid.AutoSize = true;
             Invalid.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Invalid.ForeColor = Color.Red;
-            Invalid.Location = new Point(304, 340);
+            Invalid.Location = new Point(312, 348);
             Invalid.Name = "Invalid";
-            Invalid.Size = new Size(183, 28);
+            Invalid.Size = new Size(0, 28);
             Invalid.TabIndex = 6;
-            Invalid.Text = "Invalid Credentials !";
-            Invalid.Visible = false;
             // 
             // Login
             // 
@@ -209,7 +189,7 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
@@ -235,6 +215,5 @@
         private Label checkpassword;
         private Label checkId;
         private Label Invalid;
-        private Label label5;
     }
 }

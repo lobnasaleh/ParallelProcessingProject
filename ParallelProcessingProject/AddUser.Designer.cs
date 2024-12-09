@@ -46,11 +46,15 @@
             balanceerr = new Label();
             roleerr = new Label();
             label7 = new Label();
+            getallusers = new DataGridView();
+            button5 = new Button();
+            button6 = new Button();
+            ((System.ComponentModel.ISupportInitialize)getallusers).BeginInit();
             SuspendLayout();
             // 
             // username
             // 
-            username.Location = new Point(242, 119);
+            username.Location = new Point(194, 142);
             username.Multiline = true;
             username.Name = "username";
             username.Size = new Size(247, 40);
@@ -58,7 +62,7 @@
             // 
             // pin
             // 
-            pin.Location = new Point(242, 309);
+            pin.Location = new Point(194, 333);
             pin.Name = "pin";
             pin.PasswordChar = '*';
             pin.Size = new Size(247, 27);
@@ -67,7 +71,7 @@
             // 
             // balance
             // 
-            balance.Location = new Point(242, 218);
+            balance.Location = new Point(194, 244);
             balance.Multiline = true;
             balance.Name = "balance";
             balance.Size = new Size(247, 35);
@@ -77,7 +81,7 @@
             // 
             role.FormattingEnabled = true;
             role.Items.AddRange(new object[] { "User", "Admin" });
-            role.Location = new Point(242, 415);
+            role.Location = new Point(194, 413);
             role.Name = "role";
             role.Size = new Size(247, 28);
             role.TabIndex = 1;
@@ -87,7 +91,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.Highlight;
-            label1.Location = new Point(63, 130);
+            label1.Location = new Point(26, 156);
             label1.Name = "label1";
             label1.Size = new Size(120, 29);
             label1.TabIndex = 2;
@@ -99,7 +103,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold);
             label2.ForeColor = SystemColors.Highlight;
-            label2.Location = new Point(63, 307);
+            label2.Location = new Point(26, 333);
             label2.Name = "label2";
             label2.Size = new Size(52, 29);
             label2.TabIndex = 2;
@@ -110,7 +114,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold);
             label3.ForeColor = SystemColors.Highlight;
-            label3.Location = new Point(63, 224);
+            label3.Location = new Point(26, 244);
             label3.Name = "label3";
             label3.Size = new Size(96, 29);
             label3.TabIndex = 2;
@@ -119,24 +123,26 @@
             // label4
             // 
             label4.AutoSize = true;
+            label4.BackColor = SystemColors.ActiveCaptionText;
             label4.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold);
-            label4.ForeColor = SystemColors.Highlight;
-            label4.Location = new Point(528, 78);
+            label4.ForeColor = SystemColors.HighlightText;
+            label4.Location = new Point(0, 72);
             label4.Name = "label4";
             label4.Size = new Size(85, 29);
             label4.TabIndex = 2;
             label4.Text = "Admin";
+            label4.Click += label4_Click;
             // 
             // button4
             // 
             button4.BackColor = SystemColors.GradientActiveCaption;
             button4.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button4.ForeColor = SystemColors.Highlight;
-            button4.Location = new Point(352, 541);
+            button4.Location = new Point(544, 541);
             button4.Name = "button4";
             button4.Size = new Size(177, 45);
             button4.TabIndex = 5;
-            button4.Text = "Create";
+            button4.Text = "Add";
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
             // 
@@ -145,18 +151,19 @@
             label5.BackColor = SystemColors.Highlight;
             label5.Font = new Font("Microsoft New Tai Lue", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(3, 0);
+            label5.Location = new Point(0, -6);
             label5.Name = "label5";
-            label5.Size = new Size(610, 78);
+            label5.Size = new Size(1318, 78);
             label5.TabIndex = 6;
             label5.Text = "ATM Management System";
+            label5.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold);
             label6.ForeColor = SystemColors.Highlight;
-            label6.Location = new Point(63, 415);
+            label6.Location = new Point(26, 413);
             label6.Name = "label6";
             label6.Size = new Size(61, 29);
             label6.TabIndex = 2;
@@ -167,7 +174,7 @@
             button1.BackColor = SystemColors.GradientActiveCaption;
             button1.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button1.ForeColor = SystemColors.Highlight;
-            button1.Location = new Point(26, 541);
+            button1.Location = new Point(56, 541);
             button1.Name = "button1";
             button1.Size = new Size(177, 45);
             button1.TabIndex = 5;
@@ -182,7 +189,7 @@
             panel1.ForeColor = SystemColors.Highlight;
             panel1.Location = new Point(0, 605);
             panel1.Name = "panel1";
-            panel1.Size = new Size(617, 14);
+            panel1.Size = new Size(1278, 14);
             panel1.TabIndex = 7;
             // 
             // usernameerr
@@ -190,7 +197,7 @@
             usernameerr.AutoSize = true;
             usernameerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             usernameerr.ForeColor = Color.Red;
-            usernameerr.Location = new Point(242, 173);
+            usernameerr.Location = new Point(203, 185);
             usernameerr.Name = "usernameerr";
             usernameerr.Size = new Size(0, 23);
             usernameerr.TabIndex = 8;
@@ -200,7 +207,7 @@
             pinerr.AutoSize = true;
             pinerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             pinerr.ForeColor = Color.Red;
-            pinerr.Location = new Point(248, 339);
+            pinerr.Location = new Point(194, 359);
             pinerr.Name = "pinerr";
             pinerr.Size = new Size(0, 23);
             pinerr.TabIndex = 8;
@@ -210,7 +217,7 @@
             balanceerr.AutoSize = true;
             balanceerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             balanceerr.ForeColor = Color.Red;
-            balanceerr.Location = new Point(248, 256);
+            balanceerr.Location = new Point(194, 282);
             balanceerr.Name = "balanceerr";
             balanceerr.Size = new Size(0, 23);
             balanceerr.TabIndex = 8;
@@ -221,7 +228,7 @@
             roleerr.AutoSize = true;
             roleerr.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             roleerr.ForeColor = Color.Red;
-            roleerr.Location = new Point(242, 446);
+            roleerr.Location = new Point(194, 446);
             roleerr.Name = "roleerr";
             roleerr.Size = new Size(0, 23);
             roleerr.TabIndex = 8;
@@ -229,21 +236,60 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.ForeColor = Color.Red;
-            label7.Location = new Point(573, 9);
+            label7.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.ForeColor = SystemColors.GrayText;
+            label7.Location = new Point(1099, 24);
             label7.Name = "label7";
-            label7.Size = new Size(46, 50);
-            label7.TabIndex = 9;
-            label7.Text = "X";
-            label7.Click += label7_Click;
+            label7.Size = new Size(153, 29);
+            label7.TabIndex = 12;
+            label7.Text = "Manage User";
+            // 
+            // getallusers
+            // 
+            getallusers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            getallusers.Location = new Point(467, 109);
+            getallusers.Name = "getallusers";
+            getallusers.RowHeadersWidth = 51;
+            getallusers.Size = new Size(785, 412);
+            getallusers.TabIndex = 13;
+            getallusers.CellClick += getallusers_CellClick;
+            getallusers.CellContentClick += getallusers_CellContentClick;
+            // 
+            // button5
+            // 
+            button5.BackColor = SystemColors.GradientActiveCaption;
+            button5.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
+            button5.ForeColor = SystemColors.Highlight;
+            button5.Location = new Point(794, 541);
+            button5.Name = "button5";
+            button5.Size = new Size(177, 45);
+            button5.TabIndex = 14;
+            button5.Text = "Update";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
+            // 
+            // button6
+            // 
+            button6.BackColor = SystemColors.GradientActiveCaption;
+            button6.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
+            button6.ForeColor = SystemColors.Highlight;
+            button6.Location = new Point(1039, 541);
+            button6.Name = "button6";
+            button6.Size = new Size(177, 45);
+            button6.TabIndex = 15;
+            button6.Text = "Delete";
+            button6.UseVisualStyleBackColor = false;
+            button6.Click += button6_Click;
             // 
             // AddUser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(617, 619);
+            ClientSize = new Size(1278, 619);
+            Controls.Add(button6);
+            Controls.Add(button5);
+            Controls.Add(getallusers);
             Controls.Add(label7);
             Controls.Add(roleerr);
             Controls.Add(balanceerr);
@@ -262,11 +308,12 @@
             Controls.Add(balance);
             Controls.Add(pin);
             Controls.Add(username);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Name = "AddUser";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AddUser";
             Load += AddUser_Load;
+            ((System.ComponentModel.ISupportInitialize)getallusers).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -291,5 +338,8 @@
         private Label balanceerr;
         private Label roleerr;
         private Label label7;
+        private DataGridView getallusers;
+        private Button button5;
+        private Button button6;
     }
 }

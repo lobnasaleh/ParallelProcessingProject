@@ -36,7 +36,6 @@
             AccNum = new Label();
             label3 = new Label();
             balance = new Label();
-            label6 = new Label();
             SuspendLayout();
             // 
             // label5
@@ -135,24 +134,11 @@
             balance.Text = "Balane EG";
             balance.Click += label2_Click;
             // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.ForeColor = Color.Red;
-            label6.Location = new Point(724, 9);
-            label6.Name = "label6";
-            label6.Size = new Size(46, 50);
-            label6.TabIndex = 12;
-            label6.Text = "X";
-            label6.Click += label6_Click;
-            // 
             // CheckBalance
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(795, 450);
-            Controls.Add(label6);
             Controls.Add(balance);
             Controls.Add(AccNum);
             Controls.Add(label3);
@@ -161,7 +147,7 @@
             Controls.Add(button1);
             Controls.Add(panel1);
             Controls.Add(label5);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Name = "CheckBalance";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CheckBalance";
@@ -180,6 +166,5 @@
         private Label AccNum;
         private Label label3;
         private Label balance;
-        private Label label6;
     }
 }

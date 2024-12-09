@@ -62,5 +62,12 @@ namespace ParallelProcessingProject
         {
             Application.Exit();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ChangePIN cp=new ChangePIN();
+            cp.Show();
+            Visible = false;
+        }
     }
 }

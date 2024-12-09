@@ -34,7 +34,6 @@
             button2 = new Button();
             button1 = new Button();
             label1 = new Label();
-            label6 = new Label();
             AccNum = new Label();
             label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)Ministgrid).BeginInit();
@@ -115,18 +114,6 @@
             label1.TextAlign = ContentAlignment.MiddleCenter;
             label1.Click += label1_Click;
             // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.ForeColor = Color.Red;
-            label6.Location = new Point(706, 5);
-            label6.Name = "label6";
-            label6.Size = new Size(46, 50);
-            label6.TabIndex = 14;
-            label6.Text = "X";
-            label6.Click += label6_Click;
-            // 
             // AccNum
             // 
             AccNum.AutoSize = true;
@@ -156,14 +143,13 @@
             ClientSize = new Size(764, 628);
             Controls.Add(AccNum);
             Controls.Add(label2);
-            Controls.Add(label6);
             Controls.Add(label1);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label5);
             Controls.Add(panel1);
             Controls.Add(Ministgrid);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Name = "MiniStatement";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MiniStatement";
@@ -181,7 +167,6 @@
         private Button button2;
         private Button button1;
         private Label label1;
-        private Label label6;
         private Label AccNum;
         private Label label2;
     }

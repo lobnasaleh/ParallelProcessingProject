@@ -42,23 +42,26 @@ namespace ParallelProcessingProject
         {
             if (string.IsNullOrWhiteSpace(Id.Text)  && string.IsNullOrWhiteSpace(Password.Text))
             {
-                checkId.Visible = true;
+                checkId.Text = "Please enter your Id";
+                checkpassword.Text = "Please enter your Password";
                 checkpassword.Visible = true;
-                Invalid.Visible = false;
-
+                checkId.Visible = true;
 
             }
             else if (string.IsNullOrWhiteSpace(Id.Text ) && !string.IsNullOrWhiteSpace(Password.Text) )
             {
-                checkId.Visible = true;
-                checkpassword.Visible = false;
-                Invalid.Visible = false;
+                checkId.Text = "Please enter your Id";
+                   checkpassword.Visible = false;
+                   checkId.Visible=true;
+                
             }
             else if (!string.IsNullOrWhiteSpace(Id.Text ) && string.IsNullOrWhiteSpace(Password.Text ))
             {
-                checkId.Visible = false;
+
+                checkpassword.Text = "Please enter your Password";
                 checkpassword.Visible = true;
-                Invalid.Visible = false;
+                checkId.Visible=false;
+
 
             }
             else
@@ -111,9 +114,10 @@ namespace ParallelProcessingProject
                     }
                     else
                     {//could not Find User with this Credentials
-                        checkId.Visible = false;
+
+                        Invalid.Text = "Please enter Valid Credentials";
                         checkpassword.Visible = false;
-                        Invalid.Visible = true;
+                        checkId.Visible = false;
                         Id.Text = "";
                         Password.Text = "";
                         //a3ml eno y sleep shwaya ba3d keda ye3mlo return 3ala el home page
@@ -122,7 +126,9 @@ namespace ParallelProcessingProject
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                   MessageBox.Show(ex.ToString());
+                    Invalid.Visible = true;
+
                 }
                 finally
                 {

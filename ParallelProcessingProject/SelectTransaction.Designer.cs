@@ -37,7 +37,7 @@
             pictureBox1 = new PictureBox();
             panel1 = new Panel();
             label5 = new Label();
-            label6 = new Label();
+            button5 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -72,7 +72,7 @@
             button3.BackColor = SystemColors.GradientActiveCaption;
             button3.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button3.ForeColor = SystemColors.Highlight;
-            button3.Location = new Point(605, 308);
+            button3.Location = new Point(605, 288);
             button3.Name = "button3";
             button3.Size = new Size(205, 56);
             button3.TabIndex = 4;
@@ -98,7 +98,7 @@
             button6.BackColor = SystemColors.GradientActiveCaption;
             button6.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button6.ForeColor = SystemColors.Highlight;
-            button6.Location = new Point(605, 238);
+            button6.Location = new Point(605, 220);
             button6.Name = "button6";
             button6.Size = new Size(205, 52);
             button6.TabIndex = 4;
@@ -132,31 +132,32 @@
             label5.BackColor = SystemColors.Highlight;
             label5.Font = new Font("Microsoft New Tai Lue", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(0, 9);
+            label5.Location = new Point(0, 2);
             label5.Name = "label5";
             label5.Size = new Size(879, 57);
             label5.TabIndex = 11;
             label5.Text = "Select Your Transaction Please\r\n";
             label5.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label6
+            // button5
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.ForeColor = Color.Red;
-            label6.Location = new Point(821, 9);
-            label6.Name = "label6";
-            label6.Size = new Size(46, 50);
-            label6.TabIndex = 15;
-            label6.Text = "X";
-            label6.Click += label6_Click;
+            button5.BackColor = SystemColors.GradientActiveCaption;
+            button5.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
+            button5.ForeColor = SystemColors.Highlight;
+            button5.Location = new Point(605, 359);
+            button5.Name = "button5";
+            button5.Size = new Size(205, 56);
+            button5.TabIndex = 12;
+            button5.Text = "Change PIN";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
             // 
             // SelectTransaction
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(879, 575);
-            Controls.Add(label6);
+            Controls.Add(button5);
             Controls.Add(label5);
             Controls.Add(panel1);
             Controls.Add(pictureBox1);
@@ -165,13 +166,12 @@
             Controls.Add(button3);
             Controls.Add(button1);
             Controls.Add(button2);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Name = "SelectTransaction";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SelectTransaction";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -183,6 +183,6 @@
         private PictureBox pictureBox1;
         private Panel panel1;
         private Label label5;
-        private Label label6;
+        private Button button5;
     }
 }
