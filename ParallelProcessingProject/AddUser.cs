@@ -20,56 +20,105 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-        private int roleid = 0;
-        string hashedpassword;
+ 
        
         SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
 
 
-        private void FillDataGrid()
+        private async Task FillDataGridAsync()
         {
             try
             {
+               
+                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                {
+                  
+                    await conn.OpenAsync();
 
-
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("getAllUsers", conn);//esm el procedure
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-
-                /*    
-                    if (dt.Columns.Count > 0)
+                    using (SqlCommand cmd = new SqlCommand("getAllUsers", conn))
                     {
-                        dt.Columns.RemoveAt(dt.Columns.Count - 1);
-                    }//removing roleid*/
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                sda.Fill(dt);
+                        DataTable dt = new DataTable();
 
-                getallusers.DataSource = dt;
+                       
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            dt.Load(reader); // Load the data from the reader into the DataTable
+                        }
 
-                getallusers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        // Bind the data to the DataGridView
+                        getallusers.DataSource = dt;
 
-                getallusers.ReadOnly = true;
-
+                       
+                        getallusers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        getallusers.ReadOnly = true;
+                    }
+                }
             }
-
             catch (Exception ex)
             {
-
-                MessageBox.Show(ex.ToString());
-
-
-            }
-            finally
-            {
-                conn.Close();
-
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
 
+        private int roleid = 0;
+        string hashedpassword;
+        private async Task AddUserAsync()
+        {
+            try
+            {
+                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                {
+                   
+                    await conn.OpenAsync();
+
+                   
+                    using (SqlCommand cmd = new SqlCommand("adduser", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@username", username.Text);
+                        MessageBox.Show(hashedpassword);
+                        cmd.Parameters.AddWithValue("@password", hashedpassword);
+                        cmd.Parameters.AddWithValue("@balance", balance.Text);
+
+                   
+                        if (role.SelectedItem.ToString() == "Admin")
+                            roleid = 1;
+                        else
+                            roleid = 2;
+
+                        cmd.Parameters.AddWithValue("@role", roleid);
+
+                       
+                        int rowsAffected = await cmd.ExecuteNonQueryAsync();
+
+                        // Check if the user was successfully added
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("User added successfully.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("No rows affected. The user was not added.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+            finally
+            {
+                // Clear inputs after operation
+                await FillDataGridAsync();  // Update data grid asynchronously
+                username.Text = string.Empty;
+                pin.Text = string.Empty;
+                balance.Text = string.Empty;
+                role.SelectedIndex = -1;
+            }
+        }
 
 
         private string HashPassword(string password)
@@ -78,34 +127,37 @@ namespace ParallelProcessingProject
             string passwordhash = BCrypt.Net.BCrypt.EnhancedHashPassword(password, 13);
             return passwordhash;
         }
-        private bool checkDuplicateUserName(string userName)
+        private async Task<bool> CheckDuplicateUserNameAsync(string userName)
         {
             try
             {
-                conn.Open();
-                SqlCommand cmdd = new SqlCommand("checkDuplicateUsername", conn);//esm el procedure
-                cmdd.CommandType = CommandType.StoredProcedure;
-                cmdd.Parameters.AddWithValue("@username", username.Text);
+               
+                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                {
+                    
+                    await conn.OpenAsync();
 
-                int count = (int)cmdd.ExecuteScalar();//returning a single value zy el count wa el min wa el max
-                return count > 0;
+                  
+                    using (SqlCommand cmdd = new SqlCommand("checkDuplicateUsername", conn))
+                    {
+                        cmdd.CommandType = CommandType.StoredProcedure;
+                        cmdd.Parameters.AddWithValue("@username", userName);
+
+                       
+                        int count = (int)await cmdd.ExecuteScalarAsync();
+
+                      
+                        return count > 0;
+                    }
+                }
             }
             catch (Exception ex)
             {
-
-                MessageBox.Show(ex.Message.ToString());
-                return true;
-
-            }
-            finally
-            {
-                if (conn.State == ConnectionState.Open)
-                {
-                    conn.Close();
-                }
-
+                MessageBox.Show($"An error occurred: {ex.Message}");
+                return true; 
             }
         }
+
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -117,7 +169,7 @@ namespace ParallelProcessingProject
 
         }
 
-        private void button4_Click(object sender, EventArgs e)//create user
+        private async void button4_Click(object sender, EventArgs e)//create user
         {
             bool isValid = true;
 
@@ -133,14 +185,12 @@ namespace ParallelProcessingProject
             {
                 try
                 {
-                    if (checkDuplicateUserName(username.Text))
+                    if (await CheckDuplicateUserNameAsync(username.Text))
                     {
 
                         usernameerr.Text = "Username already taken please choose another";
                         isValid = false;
                         usernameerr.Visible = true;
-
-
                     }
                     else
                     {
@@ -232,31 +282,7 @@ namespace ParallelProcessingProject
                 //enetered both check ba2a credentials
                 try
                 {
-                    conn.Open();
-
-                    //@username nvarchar(50),@password nvarchar(255),@balance decimal (18,2),@role int
-                    SqlCommand cmd = new SqlCommand("adduser", conn);//esm el procedure
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@username", username.Text);
-                    cmd.Parameters.AddWithValue("@password", hashedpassword);
-                    cmd.Parameters.AddWithValue("@balance", balance.Text);
-                    if (role.SelectedItem.ToString() == "Admin")
-                        roleid = 1;
-                    else
-                        roleid = 2;
-
-                    cmd.Parameters.AddWithValue("@role", roleid);
-
-                    int rowsAffected = cmd.ExecuteNonQuery();//te3ml execute lel query w aterga3 el rows ely affected
-
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("User added successfully.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("No rows affected. The user was not added.");
-                    }
+                    await AddUserAsync();
                 }
                 catch (Exception ex)
                 {
@@ -273,7 +299,7 @@ namespace ParallelProcessingProject
 
                         conn.Close();
                     }
-                    FillDataGrid();
+                    await FillDataGridAsync();
                     username.Text = string.Empty;
                     pin.Text = string.Empty;
                     balance.Text = string.Empty;
@@ -292,9 +318,9 @@ namespace ParallelProcessingProject
 
         }
 
-        private void AddUser_Load(object sender, EventArgs e)
+        private async void AddUser_Load(object sender, EventArgs e)
         {
-            FillDataGrid();//method to fetch data from db and display it in a grid
+           await FillDataGridAsync();//method to fetch data from db and display it in a grid
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -439,7 +465,7 @@ namespace ParallelProcessingProject
                                                 )
                     {*/
             //enetered both check ba2a credentials
-            try //not done
+  /*          try //not done
             {
                 conn.Open();
 
@@ -478,7 +504,7 @@ namespace ParallelProcessingProject
                 conn.Close();
                 FillDataGrid();
 
-            }
+            }*/
         }
 
 

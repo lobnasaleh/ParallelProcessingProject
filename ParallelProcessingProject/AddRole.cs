@@ -18,40 +18,77 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
-        private bool checkDuplicateUserName(string userName)
+        //SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+        private static readonly SemaphoreSlim _roleUpdateSemaphore = new SemaphoreSlim(1, 1);
+
+        private async Task AddRoleAsync(string roleName)
         {
+            
             try
             {
-                conn.Open();
-                SqlCommand cmdd = new SqlCommand("checkDuplicateRoleName", conn);//esm el procedure
-                cmdd.CommandType = CommandType.StoredProcedure;
-                cmdd.Parameters.AddWithValue("@rolename", rolename.Text);
+                using (SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                {
+                    await conn.OpenAsync();  
 
-                int count = (int)cmdd.ExecuteScalar();//returning a single value zy el count wa el min wa el max
-                return count > 0;
+                    using (SqlCommand cmd = new SqlCommand("addrole", conn))  // esm el stored procedure
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@rolename", roleName);
+                       
+                        int rowsAffected = await cmd.ExecuteNonQueryAsync();  // Async to avoid blocking the UI thread
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Role added successfully.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("No rows affected. The Role was not added.");
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-
-                MessageBox.Show(ex.Message.ToString());
-                return true;
-
+             
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
-            finally
+        }
+        private async Task<bool> CheckDuplicateRoleNameAsync(string roleName)
+        {
+            try
             {
-                if (conn.State == ConnectionState.Open)
+                // Use 'using' to ensure proper disposal of the SqlConnection
+                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
                 {
-                    conn.Close();
-                }
+                   
+                    await conn.OpenAsync();
 
+                   
+                    using (SqlCommand cmdd = new SqlCommand("checkDuplicateRoleName", conn))
+                    {
+                        cmdd.CommandType = CommandType.StoredProcedure;
+                        cmdd.Parameters.AddWithValue("@rolename", roleName);
+
+                       
+                        int count = (int)await cmdd.ExecuteScalarAsync();
+
+                        // Return true if duplicate role name exists, and otherwise false
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+                return true; 
             }
         }
         private void username_TextChanged(object sender, EventArgs e)
         {
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private async void button4_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(rolename.Text))
             {
@@ -63,7 +100,7 @@ namespace ParallelProcessingProject
             {
                 try
                 {
-                    if (checkDuplicateUserName(rolename.Text))
+                    if (await CheckDuplicateRoleNameAsync(rolename.Text))
                     {
 
                         rolee.Text = "This Role already exists";
@@ -72,36 +109,21 @@ namespace ParallelProcessingProject
                     else
                     {
                         rolee.Visible = false;
+           //  SemaphoreSlim to ensure that only one thread can update the role at a time
+
+
+                        await _roleUpdateSemaphore.WaitAsync(); // Asynchronously wait to enter the critical section
                         try
                         {
-                            conn.Open();
-
-                            //@username nvarchar(50),@password nvarchar(255),@balance decimal (18,2),@role int
-                            SqlCommand cmd = new SqlCommand("addrole", conn);//esm el procedure
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.AddWithValue("@rolename", rolename.Text);
-                          
-                            int rowsAffected = cmd.ExecuteNonQuery();//te3ml execute lel query w aterga3 el rows ely affected
-
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Role added successfully.");
-                            }
-                            else
-                            {
-                                MessageBox.Show("No rows affected. The Role was not added.");
-                            }
+                            await AddRoleAsync(rolename.Text);
                         }
                         catch (Exception ex)
                         {
-
                             MessageBox.Show(ex.ToString());
-
-
                         }
                         finally
                         {
-                            conn.Close();
+                            _roleUpdateSemaphore.Release();//release when done
 
                         }
 
@@ -114,8 +136,6 @@ namespace ParallelProcessingProject
 
 
             }
-           
-          
                 
             }
             }
