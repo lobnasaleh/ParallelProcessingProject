@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,8 +19,56 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+
+        //SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
         string hashedpassword;
+
+        private async Task UpdatePinAsync(int userId, string pin)
+        {
+            
+            using (SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+            {
+                try
+                {
+                    
+                    await conn.OpenAsync();
+
+                    
+                    using (SqlCommand cmd = new SqlCommand("updatePIN", conn))//procedure name
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", userId);
+
+                        
+                        string hashedPin = HashPassword(pin);
+
+                        cmd.Parameters.AddWithValue("@pin", hashedPin);
+
+                        int rowsAffected = await cmd.ExecuteNonQueryAsync();
+
+                
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("PIN updated successfully.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("PIN update failed, please try again.");
+                        }
+                    }
+                }
+                catch (SqlException sqlEx)
+                {
+                    // Handle database-specific errors
+                    MessageBox.Show($"Database error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                   
+                    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -34,7 +83,7 @@ namespace ParallelProcessingProject
             return passwordhash;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
            // confirmerr.Visible = false;
             if (string.IsNullOrWhiteSpace(pin.Text) || string.IsNullOrWhiteSpace(confirmpin.Text))
@@ -47,43 +96,30 @@ namespace ParallelProcessingProject
                 confirmerr.Text = " PIN and Confrirming PIN are different";
 
             }
+           else if (!int.TryParse(pin.Text, out int pinNumber) || !int.TryParse(confirmpin.Text, out int pinNumber2))
+            {
+                confirmerr.Visible = true;
+                confirmerr.Text = "PIN must be a numeric value.";
+
+            }
+            else if (pin.Text.Length != 4 || confirmpin.Text.Length != 4)
+            {
+                confirmerr.Visible = true;
+                confirmerr.Text = "PIN must be exactly 4 digits.";
+               
+            }
             else
             {
                 confirmerr.Visible = false;
                 //enetered both check ba2a credentials
                 try
                 {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand("updatePIN", conn);//esm el procedure
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", UserSession.UserId);
-                    //hashpassword first
-                    hashedpassword = HashPassword(confirmpin.Text);
-
-                    cmd.Parameters.AddWithValue("@pin", hashedpassword);
-
-                    int rowsAffected = cmd.ExecuteNonQuery();//te3ml execute lel query w aterga3 el rows ely affected
-
-
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("PIN updated successfully.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("PIN did not change ,Try again!");
-                    }
+                    await UpdatePinAsync(UserSession.UserId, confirmpin.Text);
 
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
-                }
-                finally
-                {
-                    conn.Close();
-
                 }
             }
 
