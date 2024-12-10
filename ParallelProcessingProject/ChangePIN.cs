@@ -22,7 +22,7 @@ namespace ParallelProcessingProject
 
         //SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
         string hashedpassword;
-
+        private static readonly SemaphoreSlim _pinUpdateSemaphore = new SemaphoreSlim(1, 1);
         private async Task UpdatePinAsync(int userId, string pin)
         {
             
@@ -59,7 +59,7 @@ namespace ParallelProcessingProject
                 }
                 catch (SqlException sqlEx)
                 {
-                    // Handle database-specific errors
+                   
                     MessageBox.Show($"Database error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
@@ -109,17 +109,25 @@ namespace ParallelProcessingProject
                
             }
             else
+            //enetered both 
             {
                 confirmerr.Visible = false;
-                //enetered both check ba2a credentials
+
+                // Use SemaphoreSlim for thread safety
+                await _pinUpdateSemaphore.WaitAsync(); // Acquire the semaphore
                 try
                 {
-                    await UpdatePinAsync(UserSession.UserId, confirmpin.Text);
 
+                    await UpdatePinAsync(UserSession.UserId, confirmpin.Text);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
+                }
+                finally {
+
+                    _pinUpdateSemaphore.Release(); // Release the semaphore
+
                 }
             }
 
