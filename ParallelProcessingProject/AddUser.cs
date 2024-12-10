@@ -64,8 +64,11 @@ namespace ParallelProcessingProject
 
         private int roleid = 0;
         string hashedpassword;
+        private static SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);  // allow one thread at a time
+
         private async Task AddUserAsync()
         {
+            await _semaphore.WaitAsync();  // Ensure only one thread can enter this critical section at a time
             try
             {
                 using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
@@ -78,7 +81,7 @@ namespace ParallelProcessingProject
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@username", username.Text);
-                        MessageBox.Show(hashedpassword);
+                        //MessageBox.Show(hashedpassword);
                         cmd.Parameters.AddWithValue("@password", hashedpassword);
                         cmd.Parameters.AddWithValue("@balance", balance.Text);
 
@@ -111,6 +114,8 @@ namespace ParallelProcessingProject
             }
             finally
             {
+
+                _semaphore.Release();
                 // Clear inputs after operation
                 await FillDataGridAsync();  // Update data grid asynchronously
                 username.Text = string.Empty;
