@@ -170,6 +170,7 @@
             Name = "SelectTransaction";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SelectTransaction";
+            Load += SelectTransaction_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }

@@ -19,6 +19,7 @@ namespace ParallelProcessingProject
 
         private void CheckBalance_Load(object sender, EventArgs e)
         {
+
             if (UserSession.UserId != 0 && UserSession.UserName != null)
             {
                 AccNum.Text = UserSession.UserId.ToString();

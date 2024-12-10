@@ -65,9 +65,14 @@ namespace ParallelProcessingProject
 
         private void button5_Click(object sender, EventArgs e)
         {
-            ChangePIN cp=new ChangePIN();
+            ChangePIN cp = new ChangePIN();
             cp.Show();
             Visible = false;
+        }
+
+        private void SelectTransaction_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

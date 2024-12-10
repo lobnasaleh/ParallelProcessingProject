@@ -17,34 +17,59 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+       // SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
 
-        private void populateData()
+        private async Task populateData()
         {
+
+            if (UserSession.UserId == null)
+            {
+                MessageBox.Show("Invalid User ID. Please log in again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
             try
             {
                 AccNum.Text = UserSession.UserId.ToString();
-
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("getAllTransactions", conn);//esm el procedure
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", UserSession.UserId);
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
 
-                sda.Fill(dt);
 
-                if (dt.Columns.Count > 0)
+                using (SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
                 {
-                    dt.Columns.RemoveAt(dt.Columns.Count - 1);
+                    await conn.OpenAsync();
+
+                    using (SqlCommand cmd = new SqlCommand("getAllTransactions", conn))
+                    {
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", UserSession.UserId);
+
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            // Load the data from the reader into the DataTable
+                            dt.Load(reader);
+                        }
+                    }
+                    
                 }
 
-                Ministgrid.DataSource = dt;
+                    if (dt.Columns.Count > 0)
+                    {//remove rolecolumn
+                        dt.Columns.RemoveAt(dt.Columns.Count - 1);
+                    }
 
-                Ministgrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-                Ministgrid.ReadOnly = true;
+                // 3ndy masln background thread rahet tgeeb el data men el data base fa mesh 3yzaha hya ely te3ml update lel
+                // ui 3yza el main thread hya ely te3ml update to ensure that ui updates happen on the main thread 
+                //when a background thread went to get data from db and then returned
+                //i want it to tell the ui thread to update rather than updating it directly itself
+                Ministgrid.Invoke((Action)(() =>
+                {
+                    Ministgrid.DataSource = dt;
+                    Ministgrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    Ministgrid.ReadOnly = true;
+                    Ministgrid.ClearSelection(); // Optional: clear any default selection
+                }));
 
             }
             catch (Exception ex)
@@ -53,12 +78,8 @@ namespace ParallelProcessingProject
                 MessageBox.Show(ex.ToString());
 
 
-            }
-            finally
-            {
-                conn.Close();
-
-            }
+            }//no need for finally l2enny estakhdemt using {}
+         
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -75,9 +96,9 @@ namespace ParallelProcessingProject
             Application.Exit();
         }
 
-        private void MiniStatement_Load(object sender, EventArgs e)
+        private async void MiniStatement_Load(object sender, EventArgs e)
         {
-            populateData();//method to fetch data from db and display it in a grid
+            await populateData();//method to fetch data from db and display it in a grid
         }
 
         private void button1_Click(object sender, EventArgs e)//back
@@ -89,9 +110,9 @@ namespace ParallelProcessingProject
 
         private void button2_Click(object sender, EventArgs e)//logout
         {
-            Login l=new Login();
+            Login l = new Login();
             l.Show();
-            Visible=false;
+            Visible = false;
         }
     }
 }
