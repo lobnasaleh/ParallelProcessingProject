@@ -16,14 +16,14 @@ namespace ParallelProcessingProject
         public Login()
         {
             InitializeComponent();
-           
+
         }
 
-        SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
-        private bool CheckHash(string passwordenetred,string dbpassword)
+        //SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+        private bool CheckHash(string passwordenetred, string dbpassword)
         {
 
-           bool isequal = BCrypt.Net.BCrypt.EnhancedVerify(passwordenetred, dbpassword);
+            bool isequal = BCrypt.Net.BCrypt.EnhancedVerify(passwordenetred, dbpassword);
             return isequal;
         }
 
@@ -34,13 +34,72 @@ namespace ParallelProcessingProject
 
         private void Login_Load(object sender, EventArgs e)
         {
-            
+
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async Task AuthenticateUserAsync(string userId, string password)
         {
-            if (string.IsNullOrWhiteSpace(Id.Text)  && string.IsNullOrWhiteSpace(Password.Text))
+            using (SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+            {
+                await conn.OpenAsync();
+
+                SqlCommand cmd = new SqlCommand("checkUser", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", userId);
+
+                // Use SqlDataReader asynchronously
+                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync()) // Read the first row of data
+                    {
+                        string dbPassword = reader.GetString(2); // password is in the 3rd column
+                        bool isPasswordValid = CheckHash(password, dbPassword);
+
+                        if (isPasswordValid)
+                        {
+                            int roleId = reader.GetInt32(4); //  RoleId is in the 5th column
+                            if (roleId == 1) // admin
+                            {
+                                UserSession.UserId = reader.GetInt32(0); // userId is in the 1st column
+                                UserSession.UserName = reader.GetString(1); // userName is in the 2nd column
+                                AddUser u = new AddUser();
+                                u.Show();
+                                Visible = false;
+                            }
+                            else //user
+                            {
+                                SelectTransaction sc = new SelectTransaction();
+                                sc.Show();
+                                Visible = false;
+                                UserSession.UserId = reader.GetInt32(0);
+                                UserSession.Balance = reader.GetDecimal(3); // balance is in the 4th column
+                                UserSession.UserName = reader.GetString(1);
+                            }
+                        }
+                        else
+                        {
+                            Invalid.Text = "Please enter Valid Credentials";
+                            checkpassword.Visible = false;
+                            checkId.Visible = false;
+                            Id.Text = "";
+                            Password.Text = "";
+                        }
+                    }
+                    else
+                    {
+                        Invalid.Text = "Please enter Valid Credentials";
+                        checkpassword.Visible = false;
+                        checkId.Visible = false;
+                        Id.Text = "";
+                        Password.Text = "";
+                    }
+                }
+            }
+        }
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Id.Text) && string.IsNullOrWhiteSpace(Password.Text))
             {
                 checkId.Text = "Please enter your Id";
                 checkpassword.Text = "Please enter your Password";
@@ -48,19 +107,19 @@ namespace ParallelProcessingProject
                 checkId.Visible = true;
 
             }
-            else if (string.IsNullOrWhiteSpace(Id.Text ) && !string.IsNullOrWhiteSpace(Password.Text) )
+            else if (string.IsNullOrWhiteSpace(Id.Text) && !string.IsNullOrWhiteSpace(Password.Text))
             {
                 checkId.Text = "Please enter your Id";
-                   checkpassword.Visible = false;
-                   checkId.Visible=true;
-                
+                checkpassword.Visible = false;
+                checkId.Visible = true;
+
             }
-            else if (!string.IsNullOrWhiteSpace(Id.Text ) && string.IsNullOrWhiteSpace(Password.Text ))
+            else if (!string.IsNullOrWhiteSpace(Id.Text) && string.IsNullOrWhiteSpace(Password.Text))
             {
 
                 checkpassword.Text = "Please enter your Password";
                 checkpassword.Visible = true;
-                checkId.Visible=false;
+                checkId.Visible = false;
 
 
             }
@@ -69,79 +128,16 @@ namespace ParallelProcessingProject
                 //enetered both check ba2a credentials
                 try
                 {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand("checkUser", conn);//esm el procedure
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", Id.Text);
-                      // sheltha men el query  cmd.Parameters.AddWithValue("@password", Password.Text);
-                    
-                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-
-                    sda.Fill(dt);//fill tabel with result of query
-                    if (dt.Rows.Count > 0)
-                    { //he found Id of User/Admin 
-
-                        string dbpassword= dt.Rows[0][2].ToString();
-
-                        bool ispasswordvalid=CheckHash(Password.Text, dbpassword);
-
-                        if (ispasswordvalid) {
-                            int RoleId = Convert.ToInt32(dt.Rows[0][4]);//4 representing the index of roleid in database as a column
-                            if (RoleId == 1)//admin
-                            {
-                                UserSession.UserId = Convert.ToInt32(dt.Rows[0][0]);
-                                UserSession.UserName = dt.Rows[0][1].ToString();
-                                AddUser u = new AddUser();
-                                u.Show();
-                                Visible = false;
-                               
-                            }
-                            else
-                            {//User
-                                SelectTransaction sc = new SelectTransaction();
-                                sc.Show();
-                                Visible = false;
-                                UserSession.UserId = Convert.ToInt32(dt.Rows[0][0]);
-                                UserSession.Balance = Convert.ToDecimal(dt.Rows[0][3]);
-                                UserSession.UserName = dt.Rows[0][1].ToString();
-                               
-
-                            }
-                        }else
-                        {//invalid password
-                            Invalid.Text = "Please enter Valid Credentials";
-                            checkpassword.Visible = false;
-                            checkId.Visible = false;
-                            Id.Text = "";
-                            Password.Text = "";
-                        }
-
-                    }
-                    else
-                    {//could not Find User with this ID 
-
-                        Invalid.Text = "Please enter Valid Credentials";
-                        checkpassword.Visible = false;
-                        checkId.Visible = false;
-                        Id.Text = "";
-                        Password.Text = "";
-                        //a3ml eno y sleep shwaya ba3d keda ye3mlo return 3ala el home page
-                    }
+                    await AuthenticateUserAsync(Id.Text, Password.Text);
 
                 }
                 catch (Exception ex)
                 {
-                   MessageBox.Show(ex.ToString());
+                    MessageBox.Show(ex.ToString());
                     Invalid.Visible = true;
 
                 }
-                finally
-                {
-                    conn.Close();
-
-                }
+            
             }
 
 
@@ -165,6 +161,11 @@ namespace ParallelProcessingProject
         private void Password_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

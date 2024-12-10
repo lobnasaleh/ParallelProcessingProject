@@ -193,6 +193,7 @@
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
+            FormClosing += Login_FormClosing;
             Load += Login_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
