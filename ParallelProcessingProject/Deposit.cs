@@ -20,7 +20,8 @@ namespace ParallelProcessingProject
 
          const string con = (@"Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
-        decimal oldBalance , newBalance;
+        //decimal oldBalance 
+            decimal newBalance;
         // int Acc = 2 ;
         int userid = UserSession.UserId;
 
@@ -42,20 +43,20 @@ namespace ParallelProcessingProject
             }
 */
             await ProcessDeposit(depositAmount);
-            var home = new SelectTransaction();
+          /*  var home = new SelectTransaction();
             home.Show();
-            this.Hide();
+            this.Hide();*/
 
         }
         
         private async void Deposit_Load(object sender, EventArgs e)
         {
-            await GetBlanceMethod();
+            await GetBalance();
         }
 
         private async void amountToDeposit_TextChanged(object sender, EventArgs e)
         {
-            await GetBlanceMethod();
+            await GetBalance();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -92,7 +93,7 @@ namespace ParallelProcessingProject
                 using(var connection = new SqlConnection(con))
                 {
                     
-                    newBalance = oldBalance + depositAmount;
+                    newBalance = await GetBalance() + depositAmount;
                     await connection.OpenAsync();
 
 
@@ -113,8 +114,8 @@ namespace ParallelProcessingProject
 
                 }
 
-                    oldBalance = newBalance; // Update the balance in memory
-                    BalanceLabel.Text = $"Balance Rs: {oldBalance}";
+                  //  oldBalance = newBalance; // Update the balance in memory
+                    BalanceLabel.Text = $"Balance Rs: {GetBalance()}";
                     MessageBox.Show("Amount successfully deposited and transaction recorded.");
                 LogTransaction("Deposit", depositAmount);
 
@@ -132,33 +133,38 @@ namespace ParallelProcessingProject
                 semaphore.Release();
             }
         }
-        public async Task GetBlanceMethod()
+        public async Task<decimal> GetBalance()
         {
-            
-                try
-                {
-                 using (SqlConnection connection = new SqlConnection(con))
+            decimal oldbalance=0;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(con))
                 {
                     await connection.OpenAsync();
-                    SqlCommand cmd = new SqlCommand("SELECT Balance FROM Users WHERE Id = @userid", connection);
-                    cmd.Parameters.AddWithValue("@userid", userid);
 
-                    SqlDataReader reader = await cmd.ExecuteReaderAsync();
-                    if (await reader.ReadAsync())
+                    using (SqlCommand cmd = new SqlCommand("SELECT Balance FROM Users WHERE Id = @userid", connection))
                     {
-                        oldBalance = reader.GetDecimal(0);
-                        BalanceLabel.Text = $"Balance Rs: {oldBalance}";
+                        cmd.Parameters.AddWithValue("@userid", userid);
+
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                oldbalance = reader.GetDecimal(0);
+                                BalanceLabel.Text = $"Balance Rs: {oldbalance}";
+                            }
+                            return oldbalance; // Return the balance after reading
+                        }
                     }
-
-                    await reader.CloseAsync();
                 }
-
             }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error fetching balance: {ex.Message}");
-                }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error fetching balance: {ex.Message}");
+                return 0; // Return 0 in case of error
+            }
         }
+
 
         private void LogTransaction(string transactionType, decimal amount)
         {

@@ -13,9 +13,18 @@ namespace ParallelProcessingProject
 {
     public partial class Login : Form
     {
+        private readonly int threadNumber;
+        public Login(int threadNumber)
+        {
+            InitializeComponent();
+            this.threadNumber = threadNumber;
+
+        }
+
         public Login()
         {
             InitializeComponent();
+           
 
         }
 

@@ -17,47 +17,56 @@ namespace ParallelProcessingProject
         //SqlConnection con = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ATMDB;Integrated Security=True");
         const string con = (@"Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
-       decimal balance, newBalance;
+     /*  decimal balance,*/
+            decimal newBalance;
         // int Acc = 2;
         int userid = UserSession.UserId;
 
         private async void Withdrawal_Load(object sender, EventArgs e)
         {
-            await Task.Run(() => UITest());
-            await GetBlanceMethod();
+            /*await Task.Run(() => UITest());*/
+            await GetBalance();
         }
 
-        private async Task GetBlanceMethod()
+        private async Task<decimal> GetBalance()
         {
+            decimal balance=0;
+
             try
             {
                 using (var connection = new SqlConnection(con))
                 {
                     await connection.OpenAsync();
-                    SqlCommand cmd = new SqlCommand("SELECT Balance FROM Users WHERE Id = @userid", connection);
-                    cmd.Parameters.AddWithValue("@userid", userid);
 
-                    SqlDataReader reader = await cmd.ExecuteReaderAsync();
-                    if (await reader.ReadAsync())
+                    // Use a 'using' block for the command and reader to ensure proper disposal
+                    using (SqlCommand cmd = new SqlCommand("SELECT Balance FROM Users WHERE Id = @userid", connection))
                     {
-                        balance = reader.GetDecimal(0);
-                        withdrawalLabel.Text = $"Balance Rs: {balance}";
-                    }
+                        cmd.Parameters.AddWithValue("@userid", userid);
 
-                    await reader.CloseAsync();
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                balance = reader.GetDecimal(0);
+                                withdrawalLabel.Text = $"Balance Rs: {balance}";
+                            }
+
+                            return balance; // Return balance after reading the value
+                        }
+                    }
                 }
-                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error fetching balance: {ex.Message}");
+                return 0; // Return 0 in case of error
             }
-            
         }
+
 
         private async void WithdrawalSubmit_Click(object sender, EventArgs e)
         {
-            await Task.Run(() => UITest());
+          //  await Task.Run(() => UITest());
 
             if (string.IsNullOrWhiteSpace(Withdrawaltext.Text) ||
                 !decimal.TryParse(Withdrawaltext.Text, out decimal withdrawalAmount) ||
@@ -67,7 +76,7 @@ namespace ParallelProcessingProject
                 return;
             }
 
-            if (withdrawalAmount > balance)
+            if (withdrawalAmount > await GetBalance())
             {
                 MessageBox.Show("The balance cannot be negative.");
                 return;
@@ -90,7 +99,7 @@ namespace ParallelProcessingProject
             }
             try
             {
-                newBalance = balance - withdrawalAmount;
+                newBalance =await GetBalance() - withdrawalAmount;
                 using (var connection = new SqlConnection(con))
                 {
                     await connection.OpenAsync();
@@ -115,8 +124,8 @@ namespace ParallelProcessingProject
                     
                     await connection.CloseAsync();
                 }
-                balance = newBalance; // Update the balance in memory
-                withdrawalLabel.Text = $"Balance Rs: {balance}";
+            //    balance = newBalance; // Update the balance in memory
+                withdrawalLabel.Text = $"Balance Rs: {GetBalance()}";
 
                 // comment that line to test ui response 
                 MessageBox.Show("Amount successfully withdrawn and transaction recorded.");
@@ -159,8 +168,9 @@ namespace ParallelProcessingProject
             Visible = false;
         }
 
-        private void Withdrawaltext_TextChanged(object sender, EventArgs e)
+        private async void Withdrawaltext_TextChanged(object sender, EventArgs e)
         {
+            await GetBalance();
 
         }
 

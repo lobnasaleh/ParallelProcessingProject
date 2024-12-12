@@ -59,6 +59,7 @@
             username.Name = "username";
             username.Size = new Size(247, 40);
             username.TabIndex = 0;
+            username.TextChanged += username_TextChanged;
             // 
             // pin
             // 
@@ -138,7 +139,7 @@
             button4.BackColor = SystemColors.GradientActiveCaption;
             button4.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button4.ForeColor = SystemColors.Highlight;
-            button4.Location = new Point(544, 541);
+            button4.Location = new Point(17, 506);
             button4.Name = "button4";
             button4.Size = new Size(177, 45);
             button4.TabIndex = 5;
@@ -153,7 +154,7 @@
             label5.ForeColor = Color.White;
             label5.Location = new Point(0, -6);
             label5.Name = "label5";
-            label5.Size = new Size(1318, 78);
+            label5.Size = new Size(1340, 78);
             label5.TabIndex = 6;
             label5.Text = "ATM Management System";
             label5.TextAlign = ContentAlignment.MiddleCenter;
@@ -174,7 +175,7 @@
             button1.BackColor = SystemColors.GradientActiveCaption;
             button1.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button1.ForeColor = SystemColors.Highlight;
-            button1.Location = new Point(56, 541);
+            button1.Location = new Point(149, 593);
             button1.Name = "button1";
             button1.Size = new Size(177, 45);
             button1.TabIndex = 5;
@@ -187,9 +188,9 @@
             panel1.BackColor = SystemColors.Highlight;
             panel1.Dock = DockStyle.Bottom;
             panel1.ForeColor = SystemColors.Highlight;
-            panel1.Location = new Point(0, 605);
+            panel1.Location = new Point(0, 684);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1278, 14);
+            panel1.Size = new Size(1323, 14);
             panel1.TabIndex = 7;
             // 
             // usernameerr
@@ -238,7 +239,7 @@
             label7.AutoSize = true;
             label7.Font = new Font("Microsoft Tai Le", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.ForeColor = SystemColors.GrayText;
-            label7.Location = new Point(1099, 24);
+            label7.Location = new Point(1006, 24);
             label7.Name = "label7";
             label7.Size = new Size(153, 29);
             label7.TabIndex = 12;
@@ -250,7 +251,7 @@
             getallusers.Location = new Point(467, 109);
             getallusers.Name = "getallusers";
             getallusers.RowHeadersWidth = 51;
-            getallusers.Size = new Size(785, 412);
+            getallusers.Size = new Size(822, 456);
             getallusers.TabIndex = 13;
             getallusers.CellClick += getallusers_CellClick;
             getallusers.CellContentClick += getallusers_CellContentClick;
@@ -260,11 +261,11 @@
             button5.BackColor = SystemColors.GradientActiveCaption;
             button5.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button5.ForeColor = SystemColors.Highlight;
-            button5.Location = new Point(794, 541);
+            button5.Location = new Point(755, 607);
             button5.Name = "button5";
-            button5.Size = new Size(177, 45);
+            button5.Size = new Size(318, 45);
             button5.TabIndex = 14;
-            button5.Text = "Update";
+            button5.Text = "TransactionsByDate";
             button5.UseVisualStyleBackColor = false;
             button5.Click += button5_Click;
             // 
@@ -273,7 +274,7 @@
             button6.BackColor = SystemColors.GradientActiveCaption;
             button6.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button6.ForeColor = SystemColors.Highlight;
-            button6.Location = new Point(1039, 541);
+            button6.Location = new Point(264, 506);
             button6.Name = "button6";
             button6.Size = new Size(177, 45);
             button6.TabIndex = 15;
@@ -286,7 +287,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1278, 619);
+            ClientSize = new Size(1323, 698);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(getallusers);
