@@ -65,6 +65,7 @@ namespace ParallelProcessingProject
         private int roleid = 0;
         string hashedpassword;
         private static SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);  // allow one thread at a time
+        private static SemaphoreSlim _semaphoredelete = new SemaphoreSlim(1, 1);  // Ensures only one delete operation can happen at a time
 
         private async Task AddUserAsync()
         {
@@ -512,10 +513,71 @@ namespace ParallelProcessingProject
             }*/
         }
 
-
-        private void button6_Click(object sender, EventArgs e)//delete
+        private async Task DeleteUserAsync(string username)
         {
+            await _semaphoredelete.WaitAsync();
+            try
+            {
+                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                {
+                    await conn.OpenAsync();
+                    //DeleteUserByUsername @username
 
+                    using (SqlCommand cmd = new SqlCommand("DeleteUserByUsername", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@username", username);
+
+                        int rowsAffected = await cmd.ExecuteNonQueryAsync();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("User deleted successfully.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("No user with this name exists.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+            finally {
+                _semaphoredelete.Release();
+            }
+        }
+
+        private async void button6_Click(object sender, EventArgs e)//delete
+        {
+            // Check if a row is selected in the DataGridView
+            getallusers.MultiSelect = false;
+
+            if (getallusers.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a user to delete.");
+                return;
+            }
+
+            // Get the username from the selected row
+            var selectedRow = getallusers.SelectedRows[0]; // Get the first selected row 
+            string usernameToDelete = selectedRow.Cells["Username"].Value.ToString();
+
+            var confirmResult = MessageBox.Show($"Are you sure you want to delete the user '{usernameToDelete}'?",
+                                                "Confirm Delete",
+                                                MessageBoxButtons.YesNo);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                await DeleteUserAsync(usernameToDelete);
+                await FillDataGridAsync();  // Refresh the data grid 
+                username.Text = string.Empty;
+                pin.Text = string.Empty;
+                balance.Text = string.Empty;
+                role.SelectedIndex = -1;
+            }
         }
     }
 

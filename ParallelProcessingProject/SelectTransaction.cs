@@ -22,14 +22,18 @@ namespace ParallelProcessingProject
 
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)//withdraw
         {
-
+            Withdrawal wd= new Withdrawal();
+            wd.Show();
+            Visible=false;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)//deposit
         {
-
+            Deposit d=new Deposit();
+            d.Show();
+            Visible = false;
         }
 
         private void button3_Click(object sender, EventArgs e)

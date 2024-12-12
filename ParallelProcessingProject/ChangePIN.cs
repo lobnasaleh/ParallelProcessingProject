@@ -38,8 +38,7 @@ namespace ParallelProcessingProject
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@id", userId);
-
-                        
+   
                         string hashedPin = HashPassword(pin);
 
                         cmd.Parameters.AddWithValue("@pin", hashedPin);
