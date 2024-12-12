@@ -48,7 +48,7 @@ namespace ParallelProcessingProject
                     await con.OpenAsync(); // Open connection only when needed
 
                     // Build the SQL query
-                    string sql = "SELECT * FROM Transactions WHERE 1=1";
+                    string sql = "SELECT * FROM Transactions T inner join Users U on U.Id=T.UserId  where U.IsDeleted=0";
                     SqlCommand cmd = new SqlCommand(sql, con);
 
                     if (dateTimePicker1.Value != null)
@@ -70,6 +70,11 @@ namespace ParallelProcessingProject
                     throw new Exception("Failed to retrieve data.", ex);
                 }
             } // 'using' automatically closes the connection
+        }
+
+        private void GetTransactions_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

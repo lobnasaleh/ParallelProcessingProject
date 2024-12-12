@@ -56,7 +56,7 @@ namespace ParallelProcessingProject
 
                     if (dt.Columns.Count > 0)
                     {//remove rolecolumn
-                        dt.Columns.RemoveAt(dt.Columns.Count - 1);
+                        dt.Columns.RemoveAt(dt.Columns.Count - 1);//ghalbean ha2ool -2 kman
                     }
 
                 // 3ndy masln background thread rahet tgeeb el data men el data base fa mesh 3yzaha hya ely te3ml update lel
