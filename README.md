@@ -63,6 +63,34 @@ This repository contains an application that handles various user management tas
   - **SemaphoreSlim:** Ensures that only one delete operation occurs at a time, maintaining consistency and avoiding potential race conditions.
   - **Async-Await:** The deletion is performed asynchronously to prevent UI blocking.
 
+ ### 8. DEPOSIT PROCESS
+- Functionality: This feature allows users to deposit a specified amount into their account balance.
+- How it works:
+  - Users can enter the deposit amount in a text box.
+  - The application checks if the entered amount is valid (i.e., a positive decimal).
+  - If valid, the deposit is processed, updating the user's balance and recording the transaction in the database.
+  - Async-Await: The deposit process is performed asynchronously to prevent the UI from freezing during database operations.
+  - SemaphoreSlim: Ensures that only one Deposite operation occurs at a time, maintaining consistency and avoiding potential race conditions.
+  - semaphore.Release: ensures the semaphore Released to avoid deadlock.
+
+### 9. WITHDRAWAL 
+- Functionality: This feature allows users to withdraw a specified amount from their account balance.
+- How it works:
+  - Users can enter the withdrawal amount in a text box.
+  - The application checks if the entered amount is valid and does not exceed the available balance.
+  - If valid, the withdrawal is processed, updating the user's balance and recording the transaction in the database.
+  - Async-Await: The withdrawal process is performed asynchronously to prevent the UI from freezing during database operations.
+  - SemaphoreSlim: Ensures that only one Withdrawal operation occurs at a time, maintaining consistency and avoiding potential race conditions.
+  - semaphore.Release: ensures the semaphore Released to avoid deadlock.
+
+  ### 10. FETCH TRANSACTIONS
+- Functionality: This feature retrieves transaction records from the database and displays them in a DataGridView.
+- How it works:
+  - The user can select a date using a DateTimePicker to filter transactions by date.
+  - The application constructs a SQL query that joins the Transactions and Users tables, ensuring that only non-deleted users' transactions are fetched.
+  - Async-Await: The data retrieval is performed asynchronously to prevent the UI from freezing during the operation.
+  - Error Handling: Any exceptions that occur during the data fetching process are caught and displayed to the user in a message box.
+
 ---
 
 ## Key Concepts
