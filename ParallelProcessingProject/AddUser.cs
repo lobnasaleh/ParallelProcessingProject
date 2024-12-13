@@ -47,6 +47,10 @@ namespace ParallelProcessingProject
                             dt.Load(reader); // Load the data from the reader into the DataTable
                         }
 
+                        if (dt.Columns.Count > 0)
+                        {//remove rolecolumn
+                            dt.Columns.RemoveAt(dt.Columns.Count - 1);//ghalbean ha2ool -2 kman
+                        }
                         // Bind the data to the DataGridView
                         getallusers.DataSource = dt;
 

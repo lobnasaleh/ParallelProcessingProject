@@ -28,3 +28,5 @@
 12/12/2024 3:01:02 PM: Withdrawal of $20.00. New balance: $600.00
 12/12/2024 3:05:44 PM: Withdrawal of $20.00. New balance: $580.00
 12/12/2024 3:05:56 PM: Withdrawal of $30.00. New balance: $550.00
+12/13/2024 8:05:58 PM: Withdrawal of $100.00. New balance: $450.00
+12/13/2024 8:06:57 PM: Deposit of $100.00. New balance: $550.00
