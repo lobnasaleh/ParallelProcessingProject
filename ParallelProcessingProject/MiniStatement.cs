@@ -17,8 +17,10 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-       // SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
-
+          /// <summary>
+        /// Fetches and populates transaction data from the database for the logged-in user telling him about transactions he made with date and time.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         private async Task populateData()
         {
 
@@ -56,7 +58,7 @@ namespace ParallelProcessingProject
 
                     if (dt.Columns.Count > 0)
                     {//remove rolecolumn
-                        dt.Columns.RemoveAt(dt.Columns.Count - 1);//ghalbean ha2ool -2 kman
+                        dt.Columns.RemoveAt(dt.Columns.Count - 1);
                     }
 
                 // 3ndy masln background thread rahet tgeeb el data men el data base fa mesh 3yzaha hya ely te3ml update lel

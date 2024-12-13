@@ -17,7 +17,12 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// It executes the stored procedure getBalanceById to retrieve the balance of the user 
+        /// based on the provided id. If the balance is found, it is returned as a decimal value.
+        /// </summary>
+        /// <param name="id">signed in user id</param>
+        /// <returns>Current Balance of User</returns>
         public async Task<decimal> getBalanceFromDb(int id)
         {
             decimal balance = 0;

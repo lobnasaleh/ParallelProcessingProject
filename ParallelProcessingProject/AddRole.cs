@@ -18,8 +18,7 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-        //SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
-        private static readonly SemaphoreSlim _roleUpdateSemaphore = new SemaphoreSlim(1, 1);
+       private static readonly SemaphoreSlim _roleUpdateSemaphore = new SemaphoreSlim(1, 1);
 
         private async Task AddRoleAsync(string roleName)
         {
@@ -54,6 +53,11 @@ namespace ParallelProcessingProject
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+        /// <summary>
+        /// Checking if enetered Role is duplicate
+        /// </summary>
+        /// <param name="roleName">entered role by admin</param>
+        /// <returns>true if role already exists and false otherwise</returns>
         private async Task<bool> CheckDuplicateRoleNameAsync(string roleName)
         {
             try

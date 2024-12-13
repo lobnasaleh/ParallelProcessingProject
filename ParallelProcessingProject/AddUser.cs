@@ -24,7 +24,12 @@ namespace ParallelProcessingProject
 
         SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
 
-
+        /// <summary>
+        /// Asynchronously retrieves all users from the database using a stored procedure (getAllUsers) 
+        /// and populates the DataGridView (getallusers) with this data.
+        /// is method is called when the form loads or when a user is added, deleted to refresh the list of users.
+        /// </summary>
+        /// <returns></returns>
         private async Task FillDataGridAsync()
         {
             try
@@ -70,7 +75,11 @@ namespace ParallelProcessingProject
         string hashedpassword;
         private static SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);  // allow one thread at a time
         private static SemaphoreSlim _semaphoredelete = new SemaphoreSlim(1, 1);  // Ensures only one delete operation can happen at a time
-
+        /// <summary>
+        /// synchronously adds a new user to the database by executing the adduser stored procedure. 
+        /// This method ensures that only one thread can add a user at a time by using the _semaphore.
+        /// </summary>
+    
         private async Task AddUserAsync()
         {
             await _semaphore.WaitAsync();  // Ensure only one thread can enter this critical section at a time
@@ -130,13 +139,23 @@ namespace ParallelProcessingProject
             }
         }
 
-
+        /// <summary>
+        /// Hashes a given password (or PIN) using the BCrypt library to ensure secure storage of passwords.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         private string HashPassword(string password)
         {
 
             string passwordhash = BCrypt.Net.BCrypt.EnhancedHashPassword(password, 13);
             return passwordhash;
         }
+        /// <summary>
+        /// Asynchronously checks if a given username already exists in the database
+        /// by executing the checkDuplicateUsername stored procedur
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>True if duplicate</returns>
         private async Task<bool> CheckDuplicateUserNameAsync(string userName)
         {
             try
@@ -384,7 +403,12 @@ namespace ParallelProcessingProject
             d.Show();
             Visible = false;
         }
-
+        /// <summary>
+        /// Asynchronously deletes a user from the database using the DeleteUserByUsername stored procedure. 
+        /// This method ensures that only one delete operation occurs at a time using the _semaphoredelete
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         private async Task DeleteUserAsync(string username)
         {
             await _semaphoredelete.WaitAsync();
@@ -422,6 +446,7 @@ namespace ParallelProcessingProject
                 _semaphoredelete.Release();
             }
         }
+      
 
         private async void button6_Click(object sender, EventArgs e)//delete
         {

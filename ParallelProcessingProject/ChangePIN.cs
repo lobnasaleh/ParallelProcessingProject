@@ -20,9 +20,12 @@ namespace ParallelProcessingProject
             InitializeComponent();
         }
 
-        //SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
         string hashedpassword;
         private static readonly SemaphoreSlim _pinUpdateSemaphore = new SemaphoreSlim(1, 1);
+        /// <summary>
+        /// Updates the PIN of  Given user id ,
+        /// </summary>
+
         private async Task UpdatePinAsync(int userId, string pin)
         {
             

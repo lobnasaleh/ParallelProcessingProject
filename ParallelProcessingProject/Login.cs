@@ -27,8 +27,12 @@ namespace ParallelProcessingProject
            
 
         }
-
-        //SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+        /// <summary>
+        /// Verifies if the entered password matches the hashed password from the database.
+        /// </summary>
+        /// <param name="passwordenetred">The password entered by the user.</param>
+        /// <param name="dbpassword">The hashed password stored in the database</param>
+        /// <returns>True if the passwords match, otherwise false.</returns>
         private bool CheckHash(string passwordenetred, string dbpassword)
         {
 
@@ -46,7 +50,12 @@ namespace ParallelProcessingProject
 
 
         }
-
+        /// <summary>
+        /// Authenticates the user by validating credentials against the database.
+        /// </summary>
+        /// <param name="userId">The user's ID entered in the login form.</param>
+        /// <param name="password">The user's password entered in the login form.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         private async Task AuthenticateUserAsync(string userId, string password)
         {
             using (SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
@@ -106,6 +115,10 @@ namespace ParallelProcessingProject
                 }
             }
         }
+        /// <summary>
+        /// Validates the User's inputs and then authnticate him
+        /// </summary>
+      
         private async void button1_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Id.Text) && string.IsNullOrWhiteSpace(Password.Text))
