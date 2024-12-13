@@ -37,7 +37,7 @@ namespace ParallelProcessingProject
                 DataTable dt = new DataTable();
 
 
-                using (SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
                     await conn.OpenAsync();
 

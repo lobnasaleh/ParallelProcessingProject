@@ -18,7 +18,7 @@ namespace ParallelProcessingProject
             InitializeComponent();
         }
 
-         const string con = (@"Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+       //  const string con = (@"Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
         //decimal oldBalance 
             decimal newBalance;
@@ -90,7 +90,7 @@ namespace ParallelProcessingProject
             }
                 try
                 {
-                using(var connection = new SqlConnection(con))
+                using(var connection = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
                     
                     newBalance = await GetBalance() + depositAmount;
@@ -138,7 +138,7 @@ namespace ParallelProcessingProject
             decimal oldbalance=0;
             try
             {
-                using (SqlConnection connection = new SqlConnection(con))
+                using (SqlConnection connection = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
                     await connection.OpenAsync();
 

@@ -58,7 +58,7 @@ namespace ParallelProcessingProject
         /// <returns>A task representing the asynchronous operation.</returns>
         private async Task AuthenticateUserAsync(string userId, string password)
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+            using (SqlConnection conn = new SqlConnection(ConnectionStringProvider.ConnectionString))
             {
                 await conn.OpenAsync();
 

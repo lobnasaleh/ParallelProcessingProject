@@ -107,6 +107,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "DeleteUser";
             Text = "DeleteUser";
+            Load += DeleteUser_Load;
             ResumeLayout(false);
             PerformLayout();
         }

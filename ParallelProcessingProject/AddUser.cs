@@ -22,7 +22,7 @@ namespace ParallelProcessingProject
         }
 
 
-        SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+        //SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
 
         /// <summary>
         /// Asynchronously retrieves all users from the database using a stored procedure (getAllUsers) 
@@ -35,7 +35,7 @@ namespace ParallelProcessingProject
             try
             {
 
-                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                using (var conn = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
 
                     await conn.OpenAsync();
@@ -79,13 +79,13 @@ namespace ParallelProcessingProject
         /// synchronously adds a new user to the database by executing the adduser stored procedure. 
         /// This method ensures that only one thread can add a user at a time by using the _semaphore.
         /// </summary>
-    
+
         private async Task AddUserAsync()
         {
             await _semaphore.WaitAsync();  // Ensure only one thread can enter this critical section at a time
             try
             {
-                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                using (var conn = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
 
                     await conn.OpenAsync();
@@ -161,7 +161,7 @@ namespace ParallelProcessingProject
             try
             {
 
-                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                using (var conn = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
 
                     await conn.OpenAsync();
@@ -322,12 +322,7 @@ namespace ParallelProcessingProject
                 }
                 finally
                 {
-                    if (conn.State == ConnectionState.Open)
-                    {
 
-
-                        conn.Close();
-                    }
                     await FillDataGridAsync();
                     username.Text = string.Empty;
                     pin.Text = string.Empty;
@@ -414,7 +409,7 @@ namespace ParallelProcessingProject
             await _semaphoredelete.WaitAsync();
             try
             {
-                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                using (var conn = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
                     await conn.OpenAsync();
                     //DeleteUserByUsername @username
@@ -446,7 +441,7 @@ namespace ParallelProcessingProject
                 _semaphoredelete.Release();
             }
         }
-      
+
 
         private async void button6_Click(object sender, EventArgs e)//delete
         {
@@ -482,6 +477,18 @@ namespace ParallelProcessingProject
         {
             await FillDataGridAsync();//method to fetch data from db and display it in a grid
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)//add role
+        {
+            AddRole r = new AddRole();
+            r.Show();
+            Visible = false;
         }
     }
 

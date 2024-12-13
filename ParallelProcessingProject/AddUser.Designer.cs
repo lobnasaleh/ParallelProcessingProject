@@ -49,6 +49,7 @@
             getallusers = new DataGridView();
             button5 = new Button();
             button6 = new Button();
+            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)getallusers).BeginInit();
             SuspendLayout();
             // 
@@ -175,7 +176,7 @@
             button1.BackColor = SystemColors.GradientActiveCaption;
             button1.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button1.ForeColor = SystemColors.Highlight;
-            button1.Location = new Point(149, 593);
+            button1.Location = new Point(158, 596);
             button1.Name = "button1";
             button1.Size = new Size(177, 45);
             button1.TabIndex = 5;
@@ -261,7 +262,7 @@
             button5.BackColor = SystemColors.GradientActiveCaption;
             button5.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button5.ForeColor = SystemColors.Highlight;
-            button5.Location = new Point(755, 607);
+            button5.Location = new Point(588, 607);
             button5.Name = "button5";
             button5.Size = new Size(318, 45);
             button5.TabIndex = 14;
@@ -282,12 +283,26 @@
             button6.UseVisualStyleBackColor = false;
             button6.Click += button6_Click;
             // 
+            // button2
+            // 
+            button2.BackColor = SystemColors.GradientActiveCaption;
+            button2.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
+            button2.ForeColor = SystemColors.Highlight;
+            button2.Location = new Point(1075, 607);
+            button2.Name = "button2";
+            button2.Size = new Size(177, 45);
+            button2.TabIndex = 16;
+            button2.Text = "Add Role";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click_1;
+            // 
             // AddUser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1323, 698);
+            Controls.Add(button2);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(getallusers);
@@ -342,5 +357,6 @@
         private DataGridView getallusers;
         private Button button5;
         private Button button6;
+        private Button button2;
     }
 }

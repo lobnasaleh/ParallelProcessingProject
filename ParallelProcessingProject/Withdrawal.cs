@@ -15,7 +15,7 @@ namespace ParallelProcessingProject
         }
 
         //SqlConnection con = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ATMDB;Integrated Security=True");
-        const string con = (@"Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+      //  const string con = (@"Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
      /*  decimal balance,*/
             decimal newBalance;
@@ -34,7 +34,7 @@ namespace ParallelProcessingProject
 
             try
             {
-                using (var connection = new SqlConnection(con))
+                using (var connection = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
                     await connection.OpenAsync();
 
@@ -100,7 +100,7 @@ namespace ParallelProcessingProject
             try
             {
                 newBalance =await GetBalance() - withdrawalAmount;
-                using (var connection = new SqlConnection(con))
+                using (var connection = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
                     await connection.OpenAsync();
 

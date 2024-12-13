@@ -18,22 +18,22 @@ namespace ParallelProcessingProject
         {
             InitializeComponent();
         }
-       private static readonly SemaphoreSlim _roleUpdateSemaphore = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim _roleUpdateSemaphore = new SemaphoreSlim(1, 1);
 
         private async Task AddRoleAsync(string roleName)
         {
-            
+
             try
             {
                 using (SqlConnection conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
                 {
-                    await conn.OpenAsync();  
+                    await conn.OpenAsync();
 
                     using (SqlCommand cmd = new SqlCommand("addrole", conn))  // esm el stored procedure
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@rolename", roleName);
-                       
+
                         int rowsAffected = await cmd.ExecuteNonQueryAsync();  // Async to avoid blocking the UI thread
 
                         if (rowsAffected > 0)
@@ -49,7 +49,7 @@ namespace ParallelProcessingProject
             }
             catch (Exception ex)
             {
-             
+
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
@@ -63,18 +63,18 @@ namespace ParallelProcessingProject
             try
             {
                 // Use 'using' to ensure proper disposal of the SqlConnection
-                using (var conn = new SqlConnection("Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True"))
+                using (var conn = new SqlConnection(ConnectionStringProvider.ConnectionString))
                 {
-                   
+
                     await conn.OpenAsync();
 
-                   
+
                     using (SqlCommand cmdd = new SqlCommand("checkDuplicateRoleName", conn))
                     {
                         cmdd.CommandType = CommandType.StoredProcedure;
                         cmdd.Parameters.AddWithValue("@rolename", roleName);
 
-                       
+
                         int count = (int)await cmdd.ExecuteScalarAsync();
 
                         // Return true if duplicate role name exists, and otherwise false
@@ -85,7 +85,7 @@ namespace ParallelProcessingProject
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
-                return true; 
+                return true;
             }
         }
         private void username_TextChanged(object sender, EventArgs e)
@@ -113,7 +113,7 @@ namespace ParallelProcessingProject
                     else
                     {
                         rolee.Visible = false;
-           //  SemaphoreSlim to ensure that only one thread can update the role at a time
+                        //  SemaphoreSlim to ensure that only one thread can update the role at a time
 
 
                         await _roleUpdateSemaphore.WaitAsync(); // Asynchronously wait to enter the critical section
@@ -140,8 +140,15 @@ namespace ParallelProcessingProject
 
 
             }
-                
-            }
-            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)//back
+        {
+            AddUser u=new AddUser();
+            u.Show();
+            Visible = false;
+        }
     }
+}
 

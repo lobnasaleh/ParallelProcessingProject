@@ -64,5 +64,10 @@ namespace ParallelProcessingProject
                 }
             }
         }
+
+        private void DeleteUser_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

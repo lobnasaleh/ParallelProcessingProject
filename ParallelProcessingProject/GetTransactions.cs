@@ -39,9 +39,9 @@ namespace ParallelProcessingProject
         private async Task FetchTransactions()
         {
             // Use a new connection for each operation
-            const string connectionString = (@"Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
+        //    const string connectionString = (@"Data Source=localhost;Initial Catalog=ATM;Integrated Security=True;TrustServerCertificate=True");
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(ConnectionStringProvider.ConnectionString))
             {
                 try
                 {

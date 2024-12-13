@@ -35,6 +35,7 @@
             label1 = new Label();
             button4 = new Button();
             rolee = new Label();
+            button1 = new Button();
             SuspendLayout();
             // 
             // label5
@@ -96,7 +97,7 @@
             button4.BackColor = SystemColors.GradientActiveCaption;
             button4.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
             button4.ForeColor = SystemColors.Highlight;
-            button4.Location = new Point(151, 348);
+            button4.Location = new Point(280, 354);
             button4.Name = "button4";
             button4.Size = new Size(177, 45);
             button4.TabIndex = 12;
@@ -114,11 +115,25 @@
             rolee.Size = new Size(0, 23);
             rolee.TabIndex = 13;
             // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.GradientActiveCaption;
+            button1.Font = new Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold);
+            button1.ForeColor = SystemColors.Highlight;
+            button1.Location = new Point(37, 354);
+            button1.Name = "button1";
+            button1.Size = new Size(177, 45);
+            button1.TabIndex = 14;
+            button1.Text = "Back";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // AddRole
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(499, 450);
+            Controls.Add(button1);
             Controls.Add(rolee);
             Controls.Add(button4);
             Controls.Add(label1);
@@ -142,5 +157,6 @@
         private Label label1;
         private Button button4;
         private Label rolee;
+        private Button button1;
     }
 }
