@@ -143,6 +143,7 @@
             Name = "ChangePIN";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ChangePIN";
+            Load += ChangePIN_Load;
             ResumeLayout(false);
             PerformLayout();
         }

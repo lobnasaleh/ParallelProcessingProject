@@ -145,9 +145,14 @@ namespace ParallelProcessingProject
 
         private void button1_Click(object sender, EventArgs e)//back
         {
-            AddUser u=new AddUser();
+            AddUser u = new AddUser();
             u.Show();
             Visible = false;
+        }
+
+        private void AddRole_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -144,6 +144,7 @@
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Name = "AddRole";
             Text = "AddRole";
+            Load += AddRole_Load;
             ResumeLayout(false);
             PerformLayout();
         }

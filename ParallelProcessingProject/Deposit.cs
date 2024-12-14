@@ -36,13 +36,16 @@ namespace ParallelProcessingProject
                 return;
             }
 
-           /* if (depositAmount > oldBalance)
-            {
-                MessageBox.Show("The balance cannot be negative.");
-                return;
-            }
-*/
+            /* if (depositAmount > oldBalance)
+             {
+                 MessageBox.Show("The balance cannot be negative.");
+                 return;
+             }
+ */
+            await Task.Delay(3000);
+
             await ProcessDeposit(depositAmount);
+            
           /*  var home = new SelectTransaction();
             home.Show();
             this.Hide();*/

@@ -131,11 +131,11 @@ namespace ParallelProcessingProject
 
                 _semaphore.Release();
                 // Clear inputs after operation
-                await FillDataGridAsync();  // Update data grid asynchronously
+               /* await FillDataGridAsync();  // Update data grid asynchronously
                 username.Text = string.Empty;
                 pin.Text = string.Empty;
                 balance.Text = string.Empty;
-                role.SelectedIndex = -1;
+                role.SelectedIndex = -1;*/
             }
         }
 
@@ -147,7 +147,7 @@ namespace ParallelProcessingProject
         private string HashPassword(string password)
         {
 
-            string passwordhash = BCrypt.Net.BCrypt.EnhancedHashPassword(password, 13);
+            string passwordhash = BCrypt.Net.BCrypt.EnhancedHashPassword(password, 13);//work factor
             return passwordhash;
         }
         /// <summary>

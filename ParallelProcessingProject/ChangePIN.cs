@@ -28,27 +28,27 @@ namespace ParallelProcessingProject
 
         private async Task UpdatePinAsync(int userId, string pin)
         {
-            
+
             using (SqlConnection conn = new SqlConnection(ConnectionStringProvider.ConnectionString))
             {
                 try
                 {
-                    
+
                     await conn.OpenAsync();
 
-                    
+
                     using (SqlCommand cmd = new SqlCommand("updatePIN", conn))//procedure name
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@id", userId);
-   
+
                         string hashedPin = HashPassword(pin);
 
                         cmd.Parameters.AddWithValue("@pin", hashedPin);
 
                         int rowsAffected = await cmd.ExecuteNonQueryAsync();
 
-                
+
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("PIN updated successfully.");
@@ -61,12 +61,12 @@ namespace ParallelProcessingProject
                 }
                 catch (SqlException sqlEx)
                 {
-                   
+
                     MessageBox.Show($"Database error: {sqlEx.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
-                   
+
                     MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -87,18 +87,18 @@ namespace ParallelProcessingProject
 
         private async void button1_Click(object sender, EventArgs e)
         {
-           // confirmerr.Visible = false;
+            // confirmerr.Visible = false;
             if (string.IsNullOrWhiteSpace(pin.Text) || string.IsNullOrWhiteSpace(confirmpin.Text))
             {
                 confirmerr.Text = "Please enter both PIN and Confrirming PIN";
 
             }
-           else if(pin.Text!= confirmpin.Text)
+            else if (pin.Text != confirmpin.Text)
             {
                 confirmerr.Text = " PIN and Confrirming PIN are different";
 
             }
-           else if (!int.TryParse(pin.Text, out int pinNumber) || !int.TryParse(confirmpin.Text, out int pinNumber2))
+            else if (!int.TryParse(pin.Text, out int pinNumber) || !int.TryParse(confirmpin.Text, out int pinNumber2))
             {
                 confirmerr.Visible = true;
                 confirmerr.Text = "PIN must be a numeric value.";
@@ -108,7 +108,7 @@ namespace ParallelProcessingProject
             {
                 confirmerr.Visible = true;
                 confirmerr.Text = "PIN must be exactly 4 digits.";
-               
+
             }
             else
             //enetered both 
@@ -126,7 +126,8 @@ namespace ParallelProcessingProject
                 {
                     MessageBox.Show(ex.ToString());
                 }
-                finally {
+                finally
+                {
 
                     _pinUpdateSemaphore.Release(); // Release the semaphore
 
@@ -136,7 +137,12 @@ namespace ParallelProcessingProject
 
 
         }
-    }
-            
+
+        private void ChangePIN_Load(object sender, EventArgs e)
+        {
+
         }
+    }
+
+}
  
